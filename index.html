@@ -2,7 +2,7 @@
 <html lang="uk">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     
     <title>Evgeny Script & Dev | Enterprise Software Architecture</title>
     <meta name="description" content="Розробка преміальних веб-проєктів, B2B автоматизація та архітектура масштабованих цифрових систем.">
@@ -12,7 +12,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
-        /* Базові змінні - Матовий темний стиль (OLED/Slate) */
+        /* Базові змінні - Матовий темний стиль */
         :root {
             --bg-main: #000000;
             --bg-surface: #0a0a0a;
@@ -33,7 +33,6 @@
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        
         html { scroll-behavior: smooth; }
         
         body { 
@@ -53,16 +52,13 @@
         
         .container { max-width: 1200px; margin: 0 auto; padding: 0 5%; }
         
-        /* Глобальні класи для анімації при скролі */
+        /* Анімація при скролі */
         .reveal {
             opacity: 0;
             transform: translateY(30px);
             transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
         }
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
+        .reveal.active { opacity: 1; transform: translateY(0); }
         .delay-1 { transition-delay: 0.1s; }
         .delay-2 { transition-delay: 0.2s; }
         .delay-3 { transition-delay: 0.3s; }
@@ -71,7 +67,7 @@
         nav {
             position: fixed; top: 0; left: 0; right: 0;
             display: flex; justify-content: space-between; align-items: center;
-            padding: 24px 5%;
+            padding: 20px 5%;
             background: rgba(0, 0, 0, 0.7);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
@@ -81,83 +77,148 @@
         .logo { font-size: 16px; font-weight: 600; letter-spacing: 0.05em; color: var(--text-primary); text-decoration: none; text-transform: uppercase; }
         .contact-link {
             font-size: 14px; font-weight: 500; color: var(--text-primary); text-decoration: none;
-            padding: 10px 20px; background: var(--bg-elevated); border: 1px solid var(--border-light);
+            padding: 8px 16px; background: var(--bg-elevated); border: 1px solid var(--border-light);
             border-radius: 6px; transition: all 0.3s ease;
         }
         .contact-link:hover { background: var(--accent); color: var(--bg-main); }
 
+        /* Вспливаюча плашка (Toast CTA) */
+        .toast-cta {
+            position: fixed;
+            top: 80px;
+            right: 5%;
+            background: rgba(15, 15, 15, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--border-light);
+            padding: 16px 40px 16px 20px;
+            border-radius: var(--radius-lg);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            z-index: 999;
+            transform: translateY(-150%);
+            opacity: 0;
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        .toast-cta.show { transform: translateY(0); opacity: 1; }
+        .toast-text { font-size: 14px; font-weight: 500; color: var(--text-primary); }
+        .toast-btn {
+            background: var(--accent); color: var(--bg-main); text-decoration: none;
+            padding: 6px 12px; border-radius: 4px; font-size: 13px; font-weight: 600;
+        }
+        .toast-close {
+            position: absolute; top: 50%; right: 12px; transform: translateY(-50%);
+            background: none; border: none; color: var(--text-secondary);
+            font-size: 18px; cursor: pointer; transition: color 0.2s;
+        }
+        .toast-close:hover { color: var(--text-primary); }
+
         /* Секції */
-        section { padding: 160px 0; border-bottom: 1px solid var(--border-light); }
-        .section-header { margin-bottom: 80px; max-width: 700px; }
-        .section-label { display: block; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); margin-bottom: 24px; }
-        .section-header h2 { font-size: 3rem; margin-bottom: 24px; color: var(--text-primary); }
+        section { padding: 140px 0; border-bottom: 1px solid var(--border-light); }
+        .section-header { margin-bottom: 60px; max-width: 700px; }
+        .section-label { display: block; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); margin-bottom: 20px; }
+        .section-header h2 { font-size: 2.8rem; margin-bottom: 20px; color: var(--text-primary); }
 
         /* Hero */
-        .hero { padding-top: 240px; padding-bottom: 160px; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; }
-        .hero h1 { font-size: clamp(3rem, 7vw, 6rem); max-width: 1000px; margin-bottom: 32px; color: #ffffff; }
-        .hero p { max-width: 650px; font-size: 1.25rem; margin-bottom: 48px; }
-        .hero-stats { display: flex; gap: 40px; border-top: 1px solid var(--border-light); padding-top: 32px; max-width: 600px; }
-        .hero-stat-val { font-size: 2rem; font-weight: 500; color: var(--text-primary); }
+        .hero { padding-top: 200px; padding-bottom: 120px; min-height: 90vh; display: flex; flex-direction: column; justify-content: center; }
+        .hero h1 { font-size: clamp(2.5rem, 8vw, 5.5rem); max-width: 1000px; margin-bottom: 24px; color: #ffffff; }
+        .hero p { max-width: 600px; font-size: 1.15rem; margin-bottom: 40px; }
+        .hero-stats { display: flex; gap: 40px; border-top: 1px solid var(--border-light); padding-top: 24px; max-width: 600px; }
+        .hero-stat-val { font-size: 2rem; font-weight: 500; color: var(--text-primary); line-height: 1.2; }
         .hero-stat-label { font-size: 0.85rem; color: var(--text-secondary); }
 
-        /* Довгий блок "Про підхід" */
-        .philosophy-content { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; }
-        .philosophy-text p { margin-bottom: 24px; }
+        /* Блок "Про підхід" */
+        .philosophy-content { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+        .philosophy-text p { margin-bottom: 20px; }
 
-        /* Детальні послуги (Grid) */
-        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; }
+        /* Послуги (Grid) */
+        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; }
         .service-card {
-            background: var(--bg-surface); border: 1px solid var(--border-light); padding: 48px;
+            background: var(--bg-surface); border: 1px solid var(--border-light); padding: 40px;
             border-radius: var(--radius-lg); transition: all 0.4s ease;
         }
         .service-card:hover { border-color: var(--border-hover); background: var(--bg-elevated); transform: translateY(-4px); }
-        .service-icon { width: 32px; height: 32px; stroke: var(--accent); stroke-width: 1.5; fill: none; margin-bottom: 40px; }
-        .service-card h3 { font-size: 1.5rem; margin-bottom: 16px; }
-        .service-card p { font-size: 1rem; color: var(--text-secondary); margin-bottom: 24px; }
+        .service-icon { width: 28px; height: 28px; stroke: var(--accent); stroke-width: 1.5; fill: none; margin-bottom: 32px; }
+        .service-card h3 { font-size: 1.4rem; margin-bottom: 12px; }
+        .service-card p { font-size: 1rem; color: var(--text-secondary); margin-bottom: 20px; }
         .service-list { list-style: none; }
         .service-list li { font-size: 0.9rem; color: var(--text-secondary); padding: 8px 0; border-top: 1px solid var(--border-light); }
 
         /* Технологічний Стек */
-        .tech-grid { display: flex; flex-wrap: wrap; gap: 12px; }
+        .tech-grid { display: flex; flex-wrap: wrap; gap: 10px; }
         .tech-tag {
-            padding: 12px 24px; background: var(--bg-surface); border: 1px solid var(--border-light);
-            border-radius: 4px; font-size: 0.9rem; color: var(--text-primary); font-weight: 500;
+            padding: 10px 20px; background: var(--bg-surface); border: 1px solid var(--border-light);
+            border-radius: 6px; font-size: 0.9rem; color: var(--text-primary); font-weight: 500;
         }
 
         /* Процес (Timeline) */
-        .workflow { display: flex; flex-direction: column; gap: 40px; }
-        .workflow-step { display: grid; grid-template-columns: 100px 1fr; gap: 24px; border-bottom: 1px solid var(--border-light); padding-bottom: 40px; }
-        .step-number { font-size: 1.5rem; color: var(--text-muted); font-weight: 600; }
-        .step-info h3 { font-size: 1.5rem; margin-bottom: 16px; }
-        .step-info p { font-size: 1.05rem; }
+        .workflow { display: flex; flex-direction: column; gap: 32px; }
+        .workflow-step { display: grid; grid-template-columns: 80px 1fr; gap: 20px; border-bottom: 1px solid var(--border-light); padding-bottom: 32px; }
+        .step-number { font-size: 1.2rem; color: var(--text-muted); font-weight: 600; }
+        .step-info h3 { font-size: 1.3rem; margin-bottom: 8px; }
+        .step-info p { font-size: 1rem; }
 
         /* CTA */
         .cta-wrapper { text-align: center; max-width: 800px; margin: 0 auto; }
-        .cta-wrapper h2 { font-size: 3.5rem; margin-bottom: 24px; }
+        .cta-wrapper h2 { font-size: 3rem; margin-bottom: 20px; }
         .btn-large {
-            display: inline-block; padding: 20px 48px; font-size: 1.1rem; font-weight: 500;
+            display: inline-block; padding: 18px 40px; font-size: 1.05rem; font-weight: 500;
             background: var(--accent); color: var(--bg-main); text-decoration: none;
-            border-radius: 4px; margin-top: 40px; transition: transform 0.3s ease;
+            border-radius: 6px; margin-top: 32px; transition: transform 0.3s ease;
         }
         .btn-large:hover { transform: scale(1.02); }
 
         /* Footer */
-        footer { padding: 80px 0; background: var(--bg-main); text-align: center; }
-        .footer-logo { font-size: 1.5rem; font-weight: 600; letter-spacing: 0.1em; margin-bottom: 16px; }
-        .footer-copy { color: var(--text-muted); font-size: 0.9rem; }
+        footer { padding: 60px 0; background: var(--bg-main); text-align: center; }
+        .footer-logo { font-size: 1.2rem; font-weight: 600; letter-spacing: 0.1em; margin-bottom: 12px; }
+        .footer-copy { color: var(--text-muted); font-size: 0.85rem; }
 
-        /* Адаптив */
+        /* =========================================
+           АДАПТИВНІСТЬ (MOBILE OPTIMIZATION)
+           ========================================= */
         @media (max-width: 900px) {
-            .hero h1 { font-size: 3.5rem; }
-            .philosophy-content { grid-template-columns: 1fr; gap: 40px; }
-            .section-header h2 { font-size: 2.5rem; }
+            .philosophy-content { grid-template-columns: 1fr; gap: 24px; }
+            .section-header h2 { font-size: 2.2rem; }
         }
+
         @media (max-width: 600px) {
-            section { padding: 100px 0; }
-            .hero { padding-top: 160px; min-height: auto; }
-            .hero h1 { font-size: 2.5rem; }
-            .workflow-step { grid-template-columns: 1fr; gap: 12px; }
-            .cta-wrapper h2 { font-size: 2.5rem; }
+            /* Відступи секцій робимо меншими */
+            section { padding: 80px 0; }
+            .hero { padding-top: 140px; padding-bottom: 80px; min-height: auto; }
+            
+            /* Плашка (Toast) на мобільному стає на всю ширину */
+            .toast-cta { 
+                top: 80px; left: 5%; right: 5%; 
+                padding: 16px 36px 16px 16px; 
+                justify-content: space-between; 
+            }
+            .toast-text { font-size: 13px; }
+
+            /* Статистика: 2 колонки на телефоні */
+            .hero-stats { 
+                grid-template-columns: 1fr 1fr; 
+                display: grid; 
+                gap: 20px; 
+                padding-top: 24px; 
+            }
+            .hero-stat-val { font-size: 1.8rem; }
+            .hero-stat-label { font-size: 0.8rem; line-height: 1.3; }
+
+            /* Картки послуг зменшують внутрішні відступи */
+            .service-card { padding: 24px; }
+            .service-icon { margin-bottom: 24px; }
+            
+            /* Теги технологій щільніше */
+            .tech-tag { padding: 8px 14px; font-size: 0.85rem; }
+
+            /* Процес: номер зверху, текст знизу */
+            .workflow-step { grid-template-columns: 1fr; gap: 8px; padding-bottom: 24px; }
+            .step-number { font-size: 1rem; margin-bottom: 4px; }
+
+            .cta-wrapper h2 { font-size: 2.2rem; }
+            .btn-large { width: 100%; text-align: center; padding: 16px 20px; }
         }
     </style>
 </head>
@@ -165,8 +226,14 @@
 
     <nav>
         <a href="#" class="logo">evs.pro</a>
-        <a href="https://t.me/evsdev" class="contact-link" target="_blank" rel="noopener">Discuss Project ↗</a>
+        <a href="https://t.me/evsdev" class="contact-link" target="_blank" rel="noopener">Contact ↗</a>
     </nav>
+
+    <div id="toast-cta" class="toast-cta">
+        <span class="toast-text">Відкритий до нових проєктів</span>
+        <a href="https://t.me/evsdev" class="toast-btn" target="_blank">Telegram</a>
+        <button class="toast-close" onclick="closeToast()">×</button>
+    </div>
 
     <section class="hero">
         <div class="container">
@@ -196,10 +263,10 @@
             <div class="philosophy-content">
                 <div class="philosophy-text reveal delay-1">
                     <p>Сучасна розробка вимагає більше, ніж просто написання рядків коду. Вона вимагає глибокого розуміння того, як продукт буде генерувати прибуток, обробляти навантаження та економити час власника.</p>
-                    <p>Мій підхід базується на концепції <strong>Vibe Coding</strong> — синергії багаторічного інженерного досвіду та інтеграції AI-інструментів для надшвидкого прототипування. Це дозволяє скоротити час розробки від місяців до тижнів, не втрачаючи у якості архітектури.</p>
+                    <p>Мій підхід базується на концепції <strong>Vibe Coding</strong> — синергії інженерного досвіду та інтеграції AI-інструментів для надшвидкого прототипування. Це дозволяє скоротити час розробки від місяців до тижнів.</p>
                 </div>
                 <div class="philosophy-text reveal delay-2">
-                    <p>Я не створюю "сайти-візитки". Я проєктую <strong>цифрові активи</strong>: парсери, що знаходять клієнтів 24/7, Telegram-боти, які автоматизують відділи продажів, та HighLoad-платформи, здатні витримувати тисячі одночасних з'єднань.</p>
+                    <p>Я не створюю шаблони. Я проєктую <strong>цифрові активи</strong>: парсери, що знаходять клієнтів 24/7, Telegram-боти, які автоматизують відділи продажів, та HighLoad-платформи.</p>
                     <p>Кожен рядок коду написаний з думкою про масштабування, безпеку даних та бездоганний користувацький досвід (UX/UI).</p>
                 </div>
             </div>
@@ -217,37 +284,34 @@
             <div class="services-grid">
                 <div class="service-card reveal">
                     <svg class="service-icon" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
-                    <h3>B2B Автоматизація та Парсинг</h3>
-                    <p>Створення складних автономних скриптів для збору, обробки та маршрутизації великих масивів даних.</p>
+                    <h3>B2B Автоматизація</h3>
+                    <p>Створення автономних скриптів для збору, обробки та маршрутизації великих масивів даних.</p>
                     <ul class="service-list">
                         <li>Синтез сировини (Scraping)</li>
                         <li>NLU Аналізатори контенту</li>
                         <li>Інтеграція з Google Maps API</li>
-                        <li>Автоматична генерація звітів</li>
                     </ul>
                 </div>
 
                 <div class="service-card reveal delay-1">
                     <svg class="service-icon" viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg>
                     <h3>Telegram Інфраструктура</h3>
-                    <p>Розробка багатопотокових ботів та юзерботів для моніторингу чатів, управління групами та лідогенерації.</p>
+                    <p>Розробка багатопотокових ботів та юзерботів для моніторингу чатів та лідогенерації.</p>
                     <ul class="service-list">
                         <li>HighLoad Боти для бізнесу</li>
                         <li>Авто-аудитори та модератори</li>
-                        <li>Інтеграція платіжних систем</li>
                         <li>Складні воронки продажів</li>
                     </ul>
                 </div>
 
                 <div class="service-card reveal delay-2">
                     <svg class="service-icon" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
-                    <h3>Full-Stack Web Розробка</h3>
-                    <p>Проєктування та розробка швидкодіючих веб-додатків, e-commerce платформ та преміальних Landing Pages.</p>
+                    <h3>Full-Stack Розробка</h3>
+                    <p>Проєктування та розробка швидкодіючих веб-додатків та преміальних Landing Pages.</p>
                     <ul class="service-list">
-                        <li>Single Page Applications (SPA)</li>
+                        <li>Single Page Apps (SPA)</li>
                         <li>Проєктування БД (SQLite, SQL)</li>
                         <li>Бездоганний Modern UI/UX</li>
-                        <li>Технічна SEO оптимізація</li>
                     </ul>
                 </div>
             </div>
@@ -275,8 +339,6 @@
                 <div class="tech-tag">PostgreSQL</div>
                 <div class="tech-tag">GramJS / MTProto</div>
                 <div class="tech-tag">Axios / Cheerio</div>
-                <div class="tech-tag">Google APIs</div>
-                <div class="tech-tag">RESTful API</div>
             </div>
         </div>
     </section>
@@ -293,35 +355,35 @@
                     <div class="step-number">01</div>
                     <div class="step-info">
                         <h3>Аналіз та Архітектура</h3>
-                        <p>Глибоке занурення в бізнес-задачу. Створення детальної схеми бази даних, визначення стеків технологій та побудова логіки маршрутизації даних.</p>
+                        <p>Глибоке занурення в бізнес-задачу. Створення схеми бази даних, визначення стеків технологій та побудова логіки.</p>
                     </div>
                 </div>
                 <div class="workflow-step reveal">
                     <div class="step-number">02</div>
                     <div class="step-info">
                         <h3>Розробка Ядра (Core)</h3>
-                        <p>Написання бекенду. Створення асинхронних потоків, інтеграція зовнішніх API та налаштування локального середовища обробки даних (NLU Engine).</p>
+                        <p>Написання бекенду. Створення асинхронних потоків, інтеграція зовнішніх API та налаштування локального середовища.</p>
                     </div>
                 </div>
                 <div class="workflow-step reveal">
                     <div class="step-number">03</div>
                     <div class="step-info">
                         <h3>Інтерфейс та Зв'язок</h3>
-                        <p>Розробка візуальної частини (Web або Telegram UI). Налаштування системи сповіщень та дашбордів для моніторингу процесів у реальному часі.</p>
+                        <p>Розробка візуальної частини (Web або Telegram UI). Налаштування системи сповіщень та дашбордів для моніторингу.</p>
                     </div>
                 </div>
                 <div class="workflow-step reveal" style="border-bottom: none;">
                     <div class="step-number">04</div>
                     <div class="step-info">
                         <h3>Тестування та Реліз</h3>
-                        <p>Стрес-тести під навантаженням, перевірка обробників помилок (watchdogs). Деплой системи на бойовий сервер та передача продукту клієнту.</p>
+                        <p>Стрес-тести під навантаженням. Деплой системи на бойовий сервер та передача готового продукту клієнту.</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="hero" style="min-height: auto; padding: 120px 0;">
+    <section class="hero" style="min-height: auto; padding: 100px 0;">
         <div class="container">
             <div class="cta-wrapper reveal">
                 <h2>Ініціювати проєкт</h2>
@@ -333,34 +395,46 @@
 
     <footer>
         <div class="container">
-            <div class="footer-logo">evs.pro</div>
+            <div class="logo" style="margin-bottom: 12px; color: var(--text-muted);">EVS.PRO</div>
             <div class="footer-copy">© 2026 Evgeny Script & Dev. Odesa, UA.<br>Engineered for High Performance.</div>
         </div>
     </footer>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const observerOptions = {
-                root: null,
-                rootMargin: '0px',
-                threshold: 0.15 // Елемент з'являється, коли 15% його видно на екрані
-            };
-
+            // 1. Анімації скролу (Intersection Observer)
+            const observerOptions = { root: null, rootMargin: '0px', threshold: 0.15 };
             const observer = new IntersectionObserver((entries, observer) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('active');
-                        // Опціонально: припинити спостереження після появи
-                        observer.unobserve(entry.target);
+                        observer.unobserve(entry.target); // Анімація програється лише один раз
                     }
                 });
             }, observerOptions);
 
-            // Знаходимо всі елементи з класом reveal і запускаємо за ними спостереження
-            document.querySelectorAll('.reveal').forEach(el => {
-                observer.observe(el);
-            });
+            document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+            // 2. Логіка плаваючої плашки (Toast CTA)
+            const toast = document.getElementById('toast-cta');
+            
+            // Показуємо через 1 секунду після завантаження
+            setTimeout(() => {
+                toast.classList.add('show');
+                
+                // Ховаємо автоматично рівно через 3 секунди
+                window.toastTimer = setTimeout(() => {
+                    closeToast();
+                }, 8000);
+            }, 1000);
         });
+
+        // Функція закриття плашки (через хрестик або по таймеру)
+        function closeToast() {
+            const toast = document.getElementById('toast-cta');
+            toast.classList.remove('show');
+            if (window.toastTimer) clearTimeout(window.toastTimer);
+        }
     </script>
 </body>
 </html>
