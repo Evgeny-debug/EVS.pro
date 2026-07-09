@@ -1,489 +1,160 @@
 <!DOCTYPE html>
-<html lang="uk">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>More Nostro | Premium Fashion</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        /* Люксовые шрифты: тонкие, изящные */
-        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500&family=Montserrat:wght@200;300;400&display=swap');
-        
-        :root {
-            --dark: #111111;
-            --dark-muted: #2a2a2a;
-            --light: #faf9f6; /* Оттенок слоновой кости, не чистый белый */
-            --accent: #bda588; /* Приглушенное шампанское/песочный */
-            --text-main: #1a1a1a;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            scroll-behavior: smooth;
-        }
-
-        body {
-            font-family: 'Montserrat', sans-serif;
-            background-color: var(--light);
-            color: var(--text-main);
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        /* Ультра-минималистичная шапка */
-        header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            padding: 30px 8%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 100;
-            background: linear-gradient(to bottom, rgba(17,17,17,0.7) 0%, rgba(17,17,17,0) 100%);
-            transition: all 0.4s ease;
-        }
-
-        header.scrolled {
-            background: rgba(250, 249, 246, 0.95);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(0,0,0,0.05);
-        }
-
-        .logo {
-            font-family: 'Cinzel', serif;
-            font-size: 1.8rem;
-            color: #fff;
-            text-transform: uppercase;
-            letter-spacing: 8px;
-            text-decoration: none;
-            transition: 0.4s;
-        }
-
-        header.scrolled .logo, header.scrolled .lang-switch {
-            color: var(--dark);
-        }
-
-        /* Переключатель языков */
-        .lang-switch {
-            display: flex;
-            gap: 25px;
-            color: #fff;
-            font-size: 0.75rem;
-            letter-spacing: 3px;
-            transition: 0.4s;
-        }
-
-        .lang-switch span {
-            cursor: pointer;
-            opacity: 0.5;
-            transition: 0.3s;
-            position: relative;
-        }
-
-        .lang-switch span.active {
-            opacity: 1;
-        }
-
-        .lang-switch span.active::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 100%;
-            height: 1px;
-            background-color: currentColor;
-        }
-
-        /* Главный экран - Журнальная обложка */
-        .hero {
-            position: relative;
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            background-color: var(--dark);
-            overflow: hidden;
-        }
-
-        .hero-bg {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: url('https://images.unsplash.com/photo-1583391733958-d25e07fac80b?q=80&w=1920&auto=format&fit=crop') center/cover no-repeat;
-            opacity: 0.6;
-            animation: slowZoom 20s infinite alternate linear;
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 2;
-            max-width: 800px;
-            padding: 0 20px;
-        }
-
-        .hero-content h1 {
-            font-family: 'Cinzel', serif;
-            font-size: clamp(2rem, 5vw, 4.5rem);
-            color: #fff;
-            font-weight: 400;
-            letter-spacing: 6px;
-            text-transform: uppercase;
-            margin-bottom: 20px;
-            line-height: 1.3;
-        }
-
-        .hero-content p {
-            color: #e0e0e0;
-            font-size: 0.9rem;
-            font-weight: 300;
-            letter-spacing: 4px;
-            text-transform: uppercase;
-            margin-bottom: 50px;
-        }
-
-        .btn-outline {
-            display: inline-block;
-            padding: 15px 40px;
-            border: 1px solid #fff;
-            color: #fff;
-            text-decoration: none;
-            font-size: 0.75rem;
-            letter-spacing: 4px;
-            text-transform: uppercase;
-            transition: 0.4s;
-        }
-
-        .btn-outline:hover {
-            background: #fff;
-            color: var(--dark);
-        }
-
-        /* Секции - Много воздуха */
-        section {
-            padding: 180px 8%;
-            max-width: 1600px;
-            margin: 0 auto;
-        }
-
-        .section-header {
-            text-align: center;
-            margin-bottom: 100px;
-        }
-
-        .section-title {
-            font-family: 'Cinzel', serif;
-            font-size: 2.5rem;
-            font-weight: 400;
-            color: var(--dark);
-            letter-spacing: 8px;
-            text-transform: uppercase;
-        }
-
-        /* Текст о бренде */
-        .about-text {
-            max-width: 700px;
-            margin: 0 auto;
-            text-align: center;
-            font-size: 1.1rem;
-            line-height: 2.4;
-            color: var(--dark-muted);
-            font-weight: 300;
-        }
-
-        /* Editorial Галерея (Журнальный стиль) */
-        .editorial-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 60px;
-        }
-
-        .editorial-item {
-            display: flex;
-            flex-direction: column;
-            cursor: pointer;
-        }
-
-        .img-wrapper {
-            position: relative;
-            width: 100%;
-            padding-top: 130%; /* Пропорции 3:4 (Fashion Portrait) */
-            overflow: hidden;
-            margin-bottom: 25px;
-        }
-
-        .img-wrapper img {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            filter: grayscale(20%);
-            transition: transform 1.5s cubic-bezier(0.19, 1, 0.22, 1), filter 1s ease;
-        }
-
-        .editorial-item:hover .img-wrapper img {
-            transform: scale(1.04);
-            filter: grayscale(0%);
-        }
-
-        .item-meta {
-            text-align: center;
-        }
-
-        .item-meta h3 {
-            font-family: 'Cinzel', serif;
-            font-size: 1.4rem;
-            font-weight: 400;
-            letter-spacing: 4px;
-            text-transform: uppercase;
-            margin-bottom: 8px;
-            color: var(--dark);
-        }
-
-        .item-meta span {
-            font-size: 0.75rem;
-            color: var(--accent);
-            letter-spacing: 3px;
-            text-transform: uppercase;
-        }
-
-        /* Футер */
-        footer {
-            background-color: var(--dark);
-            color: #fff;
-            text-align: center;
-            padding: 120px 8% 60px;
-        }
-
-        footer h2 {
-            font-family: 'Cinzel', serif;
-            font-size: 2.2rem;
-            font-weight: 400;
-            letter-spacing: 6px;
-            text-transform: uppercase;
-            margin-bottom: 20px;
-        }
-
-        footer p {
-            font-size: 0.85rem;
-            font-weight: 200;
-            letter-spacing: 3px;
-            color: rgba(255,255,255,0.6);
-            margin-bottom: 60px;
-        }
-
-        .btn-solid {
-            display: inline-block;
-            padding: 16px 45px;
-            background-color: var(--accent);
-            color: var(--light);
-            text-decoration: none;
-            font-size: 0.75rem;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            transition: 0.4s;
-        }
-
-        .btn-solid:hover {
-            background-color: #fff;
-            color: var(--dark);
-        }
-
-        .copyright {
-            margin-top: 100px;
-            font-size: 0.65rem;
-            letter-spacing: 4px;
-            color: rgba(255,255,255,0.3);
-            text-transform: uppercase;
-        }
-
-        /* Анимации */
-        @keyframes slowZoom {
-            0% { transform: scale(1); }
-            100% { transform: scale(1.1); }
-        }
-
-        /* Моб. адаптация */
-        @media (max-width: 768px) {
-            header { padding: 25px 5%; }
-            .logo { font-size: 1.4rem; }
-            section { padding: 100px 5%; }
-            .section-title { font-size: 1.8rem; }
-            .editorial-grid { gap: 40px; }
-            .img-wrapper { padding-top: 140%; }
-        
-        .hero-video {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    min-width: 100%;
-    min-height: 100%;
-    width: auto;
-    height: auto;
-    transform: translateX(-50%) translateY(-50%);
-    object-fit: cover;
-    z-index: 1;
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MORE NOSTRO | Ukrainian Modern Couture</title>
+<link rel="preconnect" href="[https://fonts.googleapis.com](https://fonts.googleapis.com)">
+<link rel="preconnect" href="[https://fonts.gstatic.com](https://fonts.gstatic.com)" crossorigin>
+<link href="[https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Montserrat:wght@200;300;400&display=swap](https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Montserrat:wght@200;300;400&display=swap)" rel="stylesheet">
+<style>
+:root {
+--bg: #F7F5F2;
+--text: #111111;
+--accent: #BDA588;
+--transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
-
-/* Затемнение видео для премиального контраста */
-.hero-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.4); /* 0.4 — это степень затемнения, можно сделать 0.5 для более темного */
-    z-index: 2;
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+background: var(--bg);
+color: var(--text);
+font-family: 'Montserrat', sans-serif;
+line-height: 1.6;
+overflow-x: hidden;
 }
-
-.hero-content {
-    position: relative;
-    z-index: 3; /* Текст будет поверх затемненного видео */
+/* Typography */
+h1, h2, .brand { font-family: 'Cinzel', serif; letter-spacing: 0.2em; text-transform: uppercase; }
+/* Navigation */
+nav {
+position: fixed;
+top: 0;
+width: 100%;
+padding: 30px 5%;
+display: flex;
+justify-content: space-between;
+align-items: center;
+z-index: 1000;
+transition: var(--transition);
 }
-
-        
-        }
-    </style>
+nav.scrolled { background: rgba(247, 245, 242, 0.95); padding: 20px 5%; border-bottom: 1px solid rgba(0,0,0,0.05); }
+.brand { font-size: 1.5rem; font-weight: 600; cursor: pointer; }
+.menu a, .lang-switch { margin-left: 30px; font-size: 0.8rem; letter-spacing: 0.2em; text-decoration: none; color: var(--text); }
+/* Hero */
+.hero {
+height: 100vh;
+display: flex;
+align-items: center;
+justify-content: center;
+position: relative;
+overflow: hidden;
+}
+.hero-bg {
+position: absolute;
+top: 0; left: 0; width: 100%; height: 100%;
+background: url('hero.jpg') center/cover no-repeat;
+transform: scale(1.1);
+transition: transform 10s ease-out;
+}
+.hero-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.3); }
+.hero-content { z-index: 1; text-align: center; color: #fff; }
+.hero h1 { font-size: clamp(2rem, 8vw, 5rem); margin-bottom: 20px; }
+.hero p { font-size: 1rem; letter-spacing: 0.4em; text-transform: uppercase; margin-bottom: 40px; }
+.btn { padding: 15px 40px; border: 1px solid #fff; color: #fff; text-decoration: none; letter-spacing: 0.2em; font-size: 0.8rem; transition: var(--transition); }
+.btn:hover { background: #fff; color: var(--text); }
+/* Sections */
+section { padding: 150px 5%; }
+.about { max-width: 700px; margin: 0 auto; text-align: center; }
+.about h2 { font-size: 2rem; margin-bottom: 40px; }
+/* Collection */
+.collection-grid {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+gap: 40px;
+}
+.card { position: relative; overflow: hidden; cursor: pointer; }
+.card img { width: 100%; height: 600px; object-fit: cover; transition: var(--transition); }
+.card:hover img { transform: scale(1.05); }
+.card-info { padding-top: 20px; text-align: center; }
+.card-info h3 { letter-spacing: 0.2em; margin-bottom: 10px; }
+/* Footer */
+footer { background: var(--text); color: #fff; padding: 100px 5%; text-align: center; }
+.copyright { margin-top: 50px; font-size: 0.7rem; opacity: 0.5; }
+/* Animations */
+.fade-up { opacity: 0; transform: translateY(30px); transition: var(--transition); }
+.fade-up.active { opacity: 1; transform: translateY(0); }
+@media (max-width: 768px) {
+.menu { display: none; }
+}
+</style>
 </head>
 <body>
-
-    <header id="navbar">
-        <a href="#" class="logo">More Nostro</a>
-        <div class="lang-switch">
-            <span id="btn-ua" class="active" onclick="switchLang('ua')">UA</span>
-            <span id="btn-en" onclick="switchLang('en')">EN</span>
-        </div>
-    </header>
-
-    <!-- Головний Екран з відео -->
-    <!-- Главный экран -->
-    <header class="hero">
-        <h1>More Nostro</h1>
-        <p>Эстетика в каждой детали. Ваш идеальный выбор.</p>
-        <a href="#gallery" class="btn">Смотреть каталог</a>
-    </header>
-
-
-    <section id="about">
-        <div class="section-header">
-            <h2 class="section-title" data-i18n="aboutTitle">Маніфест</h2>
-        </div>
-        <div class="about-text">
-            <p id="aboutTextTarget">More Nostro — мода, що говорить твоєю мовою. Ми переосмислюємо українську спадщину через призму сучасного кутюр. Кожен стібок, кожна деталь створені вручную, щоб підкреслити твою унікальність та бездоганний смак.</p>
-        </div>
-    </section>
-
-    <section id="collection">
-        <div class="editorial-grid">
-            
-            <div class="editorial-item">
-                <div class="img-wrapper">
-                    <img src="IMG_1746.jpeg" alt="Corset Kvitna">
-                </div>
-                <div class="item-meta">
-                    <h3 data-i18n="cat1Title">Корсети</h3>
-                    <span data-i18n="cat1Sub">Ручна вишивка</span>
-                </div>
-            </div>
-
-            <div class="editorial-item">
-                <div class="img-wrapper">
-                    <img src="IMG_1745.jpeg" alt="Red Suit">
-                </div>
-                <div class="item-meta">
-                    <h3 data-i18n="cat2Title">Костюми</h3>
-                    <span data-i18n="cat2Sub">Преміальні тканини</span>
-                </div>
-            </div>
-
-            <div class="editorial-item">
-                <div class="img-wrapper">
-                    <img src="IMG_1748.jpeg" alt="Limited Details">
-                </div>
-                <div class="item-meta">
-                    <h3 data-i18n="cat3Title">Limited Edition</h3>
-                    <span data-i18n="cat3Sub">Ексклюзив</span>
-                </div>
-            </div>
-
-        </div>
-    </section>
-
-    <footer>
-        <h2 data-i18n="footerTitle">Створити образ</h2>
-        <p data-i18n="footerSub">Залиште заявку на індивідуальне пошиття</p>
-        <a href="https://www.instagram.com/more.nostro" target="_blank" class="btn-solid" data-i18n="footerBtn">Зв'язок в Instagram</a>
-        
-        <div class="copyright">
-            © 2026 More Nostro. Design by EVS.pro
-        </div>
-    </footer>
-
-    <script>
-        const translations = {
-            ua: {
-                heroTitle: "Естетика традицій",
-                heroSub: "Індивідуальний пошив · Власне виробництво",
-                heroBtn: "Дивитись колекцію",
-                aboutTitle: "Маніфест",
-                aboutText: "More Nostro — мода, що говорить твоєю мовою. Ми переосмислюємо українську спадщину через призму сучасного кутюр. Кожен стібок, кожна деталь створені вручную, щоб підкреслити твою унікальність та бездоганний смак.",
-                cat1Title: "Корсети",
-                cat1Sub: "Ручна вишивка",
-                cat2Title: "Костюми",
-                cat2Sub: "Преміальні тканини",
-                cat3Title: "Limited Edition",
-                cat3Sub: "Ексклюзив",
-                footerTitle: "Створити образ",
-                footerSub: "Залиште заявку на індивідуальне пошиття",
-                footerBtn: "Зв'язок в Instagram"
-            },
-            en: {
-                heroTitle: "Aesthetics of Heritage",
-                heroSub: "Bespoke tailoring · In-house production",
-                heroBtn: "View Collection",
-                aboutTitle: "Manifesto",
-                aboutText: "More Nostro — fashion that speaks your language. We reinterpret Ukrainian heritage through the lens of modern couture. Every stitch, every detail is handcrafted to highlight your uniqueness and flawless taste.",
-                cat1Title: "Corsets",
-                cat1Sub: "Hand Embroidery",
-                cat2Title: "Suits",
-                cat2Sub: "Premium Fabrics",
-                cat3Title: "Limited Edition",
-                cat3Sub: "Exclusive",
-                footerTitle: "Create Your Look",
-                footerSub: "Leave a request for bespoke tailoring",
-                footerBtn: "Contact via Instagram"
-            }
-        };
-
-        function switchLang(lang) {
-            document.querySelectorAll('.lang-switch span').forEach(el => el.classList.remove('active'));
-            document.getElementById(`btn-${lang}`).classList.add('active');
-
-            document.querySelectorAll('[data-i18n]').forEach(element => {
-                const key = element.getAttribute('data-i18n');
-                if (translations[lang][key]) {
-                    element.textContent = translations[lang][key];
-                }
-            });
-            document.getElementById('aboutTextTarget').textContent = translations[lang]['aboutText'];
-        }
-
-        // Изменение цвета шапки при скролле для премиального эффекта
-        window.addEventListener('scroll', () => {
-            const header = document.getElementById('navbar');
-            if (window.scrollY > 50) {
-                header.classList.add('scrolled');
-            } else {
-                header.classList.remove('scrolled');
-            }
-        });
-    </script>
+<nav id="nav">
+<div class="brand">MORE NOSTRO</div>
+<div class="menu">
+<a href="#">COLLECTION</a>
+<a href="#">MANIFESTO</a>
+<a href="#">INSTAGRAM</a>
+<span class="lang-switch">UA | EN</span>
+</div>
+</nav>
+<header class="hero">
+<div class="hero-bg" id="heroBg"></div>
+<div class="hero-overlay"></div>
+<div class="hero-content">
+<h1 class="fade-up">MODERN COUTURE</h1>
+<p class="fade-up">THE ESSENCE OF UKRAINIAN ELEGANCE</p>
+<a href="#" class="btn fade-up">DISCOVER</a>
+</div>
+</header>
+<section class="about fade-up">
+<h2>THE MANIFESTO</h2>
+<p>Quiet luxury is not about minimalism. It is about the absolute refusal of the superfluous. More Nostro represents a return to tactile grace, architectural silhouettes, and the timeless heritage of Ukrainian craftsmanship.</p>
+</section>
+<section class="collection">
+<div class="collection-grid">
+<div class="card fade-up">
+<img src="IMG_1746.jpeg" alt="Collection Piece" loading="lazy">
+<div class="card-info"><h3>SILK NOIR</h3></div>
+</div>
+<div class="card fade-up">
+<img src="IMG_1745.jpeg" alt="Collection Piece" loading="lazy">
+<div class="card-info"><h3>IVORY STRUCTURE</h3></div>
+</div>
+<div class="card fade-up">
+<img src="IMG_1748.jpeg" alt="Collection Piece" loading="lazy">
+<div class="card-info"><h3>GOLDEN EASE</h3></div>
+</div>
+</div>
+</section>
+<footer>
+<p>MORE NOSTRO</p>
+<div class="copyright">© <span id="year"></span> ALL RIGHTS RESERVED.</div>
+</footer>
+<script>
+// Hero Zoom & Parallax
+window.addEventListener('scroll', () => {
+const scroll = window.scrollY;
+const heroBg = document.getElementById('heroBg');
+const nav = document.getElementById('nav');
+heroBg.style.transform = scale(${1.1 + scroll / 2000});
+if(scroll > 100) nav.classList.add('scrolled');
+else nav.classList.remove('scrolled');
+});
+// Intersection Observer for Animations
+const observerOptions = { threshold: 0.1 };
+const observer = new IntersectionObserver((entries) => {
+entries.forEach(entry => {
+if (entry.isIntersecting) entry.target.classList.add('active');
+});
+}, observerOptions);
+document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+// Year
+document.getElementById('year').textContent = new Date().getFullYear();
+// Language toggle dummy
+document.querySelector('.lang-switch').addEventListener('click', function() {
+this.textContent = this.textContent === 'UA | EN' ? 'EN | UA' : 'UA | EN';
+});
+</script>
 </body>
 </html>
