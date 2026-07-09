@@ -4,21 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>More Nostro | Official Site</title>
+    <!-- Іконки для нижнього бару -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* Подключение люксовых шрифтов */
+        /* Підключення люксових шрифтів */
         @import url('https://fonts.googleapis.com/css2?family=Italiana&family=Montserrat:wght@200;300;400;500&display=swap');
         
         :root {
-            --primary-dark: #070c12;  /* Глубокий полночный синий */
-            --accent-gold: #d4af37;   /* Премиальное золото */
-            --bg-light: #fdfcfb;      /* Чистый воздушный фон */
+            --primary-dark: #070c12;
+            --accent-gold: #d4af37;
+            --bg-light: #fdfcfb;
             --text-dark: #1a1a1a;
             --text-muted: #666666;
             --text-light: #ffffff;
-            /* Эффект матового стекла (Glassmorphism) */
-            --glass-dark: rgba(7, 12, 18, 0.65);
-            --glass-light: rgba(255, 255, 255, 0.75);
             --glass-border: rgba(255, 255, 255, 0.15);
         }
 
@@ -37,7 +35,7 @@
             letter-spacing: 0.5px;
         }
 
-        /* Шапка сайта (Glassmorphism на ПК) */
+        /* Шапка сайту (Glassmorphism) */
         header {
             position: fixed;
             top: 0;
@@ -48,9 +46,9 @@
             justify-content: space-between;
             align-items: center;
             z-index: 100;
-            background: rgba(7, 12, 18, 0.1);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
+            background: rgba(7, 12, 18, 0.15);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
 
@@ -64,7 +62,7 @@
             transition: 0.3s;
         }
 
-        /* Переключатель языков */
+        /* Перемикач мов */
         .lang-switch {
             display: flex;
             gap: 20px;
@@ -85,7 +83,7 @@
             color: var(--accent-gold);
         }
 
-        /* Главный экран (Hero) */
+        /* Головний екран (Hero) */
         .hero {
             position: relative;
             height: 100vh;
@@ -104,8 +102,8 @@
             left: 0;
             width: 100%;
             height: 100%;
-            /* Подтягивает локальное фото hero-bg.jpg. Если его нет, работает градиент под стеклом */
-            background: linear-gradient(45deg, #070c12, #1a2a3a), url('hero-bg.jpg') center/cover no-repeat;
+            /* Тематичне люксове тло: темна текстура тканини/фешн естетика */
+            background: url('https://images.unsplash.com/photo-1610427618991-314051052695?q=80&w=1920&auto=format&fit=crop') center/cover no-repeat;
             animation: kenBurns 24s infinite alternate linear;
             z-index: 1;
         }
@@ -116,7 +114,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(7, 12, 18, 0.45);
+            background: linear-gradient(180deg, rgba(7,12,18,0.3) 0%, rgba(7,12,18,0.8) 100%);
             z-index: 2;
         }
 
@@ -167,9 +165,9 @@
             transform: translateY(-2px);
         }
 
-        /* Воздушные Секции */
+        /* Повітряні секції */
         section {
-            padding: 160px 8%; /* Много воздуха по бокам и сверху */
+            padding: 160px 8%;
             max-width: 1400px;
             margin: 0 auto;
         }
@@ -191,7 +189,7 @@
             max-width: 850px;
             margin: 0 auto;
             font-size: 1.2rem;
-            line-height: 2.2; /* Много воздуха между строк */
+            line-height: 2.2;
             color: var(--text-muted);
             font-weight: 300;
         }
@@ -202,38 +200,28 @@
             letter-spacing: 1px;
         }
 
-        /* Каталог / Сетка */
+        /* Галерея */
         .gallery-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-            gap: 50px; /* Большие элегантные зазоры */
+            gap: 50px;
         }
 
         .gallery-item {
             position: relative;
             overflow: hidden;
             height: 550px;
-            /* Элегантная бежевая заглушка, если фото еще не добавлено */
-            background: linear-gradient(135deg, #f5f2eb, #e8e3d9);
+            background: #e8e3d9;
             display: flex;
             align-items: center;
             justify-content: center;
-        }
-
-        /* Текст-инструкция внутри заглушки (спрячется под фото, когда его добавят) */
-        .img-placeholder-text {
-            position: absolute;
-            font-size: 0.8rem;
-            color: #a09580;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            text-align: center;
-            line-height: 1.6;
-            z-index: 1;
+            border-radius: 4px;
         }
 
         .gallery-item img {
-            position: relative;
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
             object-fit: cover;
@@ -245,7 +233,7 @@
             transform: scale(1.05);
         }
 
-        /* Стеклянные карточки поверх фото */
+        /* Скляні картки поверх фото */
         .item-glass-card {
             position: absolute;
             bottom: 30px;
@@ -259,11 +247,13 @@
             text-align: center;
             z-index: 3;
             transition: 0.4s;
+            border-radius: 2px;
         }
 
         .gallery-item:hover .item-glass-card {
-            background: rgba(7, 12, 18, 0.75);
+            background: rgba(7, 12, 18, 0.85);
             color: white;
+            border-color: var(--accent-gold);
         }
 
         .item-glass-card h3 {
@@ -289,7 +279,7 @@
             color: var(--accent-gold);
         }
 
-        /* Футер */
+        /* Підвал сайту */
         footer {
             background-color: var(--primary-dark);
             color: var(--text-light);
@@ -339,7 +329,7 @@
             text-transform: uppercase;
         }
 
-        /* Мобильный Нижний Бар (Glassmorphism App Bar) */
+        /* Мобільний Нижній Бар (Glassmorphism) */
         .bottom-nav {
             display: none;
         }
@@ -349,25 +339,23 @@
             section { padding: 100px 20px; }
             .section-title { font-size: 2.4rem; margin-bottom: 50px; }
             
-            body {
-                padding-bottom: 80px; /* Место под бар */
-            }
+            body { padding-bottom: 80px; }
 
             .bottom-nav {
                 display: flex;
                 justify-content: space-around;
                 align-items: center;
                 position: fixed;
-                bottom: 20px; /* Парит над нижним краем экрана */
+                bottom: 20px;
                 left: 5%;
                 width: 90%;
                 height: 65px;
-                background: rgba(7, 12, 18, 0.75);
+                background: rgba(7, 12, 18, 0.85);
                 backdrop-filter: blur(20px);
                 -webkit-backdrop-filter: blur(20px);
                 border: 1px solid rgba(255, 255, 255, 0.1);
-                border-radius: 30px; /* Скругленный люксовый вид */
-                box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+                border-radius: 30px;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.4);
                 z-index: 1000;
                 padding: 0 10px;
             }
@@ -394,7 +382,7 @@
             }
         }
 
-        /* Анимация увеличения фона (Premium Ken Burns) */
+        /* Анімації */
         @keyframes kenBurns {
             0% { transform: scale(1); }
             100% { transform: scale(1.12); }
@@ -408,6 +396,7 @@
 </head>
 <body>
 
+    <!-- Навігація -->
     <header>
         <a href="#" class="logo">More Nostro</a>
         <div class="lang-switch">
@@ -416,6 +405,7 @@
         </div>
     </header>
 
+    <!-- Головний Екран -->
     <div class="hero" id="home">
         <div class="hero-bg"></div>
         <div class="hero-overlay"></div>
@@ -426,6 +416,7 @@
         </div>
     </div>
 
+    <!-- Про Бренд -->
     <section id="about">
         <h2 class="section-title" data-i18n="aboutTitle">Про бренд</h2>
         <div class="about-box">
@@ -433,31 +424,32 @@
         </div>
     </section>
 
+    <!-- Каталог -->
     <section id="catalog">
         <h2 class="section-title" data-i18n="catalogTitle">Вибрані моделі</h2>
         <div class="gallery-grid">
             
+            <!-- Картка 1: Корсети -->
             <div class="gallery-item">
-                <div class="img-placeholder-text">Покладіть сюди фото<br><strong>corsets.jpg</strong></div>
-                <img src="corsets.jpg" alt="Corsets" onerror="this.style.opacity='0'">
+                <img src="image_4.png" alt="Corsets">
                 <div class="item-glass-card">
                     <h3 data-i18n="cat1Title">Корсети</h3>
                     <span data-i18n="cat1Sub">Індивідуальний дизайн</span>
                 </div>
             </div>
 
+            <!-- Картка 2: Костюми -->
             <div class="gallery-item">
-                <div class="img-placeholder-text">Покладіть сюди фото<br><strong>suits.jpg</strong></div>
-                <img src="suits.jpg" alt="Suits" onerror="this.style.opacity='0'">
+                <img src="image_5.png" alt="Suits">
                 <div class="item-glass-card">
                     <h3 data-i18n="cat2Title">Вишиті костюми</h3>
                     <span data-i18n="cat2Sub">Преміум якість</span>
                 </div>
             </div>
 
+            <!-- Картка 3: Limited -->
             <div class="gallery-item">
-                <div class="img-placeholder-text">Покладіть сюди фото<br><strong>limited.jpg</strong></div>
-                <img src="limited.jpg" alt="Limited Edition" onerror="this.style.opacity='0'">
+                <img src="image_3.png" alt="Limited Edition">
                 <div class="item-glass-card">
                     <h3 data-i18n="cat3Title">Limited Edition</h3>
                     <span data-i18n="cat3Sub">Ексклюзивні орнаменти</span>
@@ -467,6 +459,7 @@
         </div>
     </section>
 
+    <!-- Контакти / Підвал -->
     <footer id="contact">
         <h2 data-i18n="footerTitle">Створи свій ідеальний образ</h2>
         <p data-i18n="footerSub">Зв'яжіться з нами для консультації та замовлення</p>
@@ -479,6 +472,7 @@
         </div>
     </footer>
 
+    <!-- Мобільний Нижній Бар -->
     <div class="bottom-nav">
         <a href="#home" class="nav-item active" onclick="setActiveNav(this)">
             <i class="fas fa-home"></i>
@@ -494,8 +488,8 @@
         </a>
     </div>
 
+    <!-- Скрипт перекладу та навігації -->
     <script>
-        // База данных переводов
         const translations = {
             ua: {
                 heroTitle: "Мода, що говорить твоєю мовою",
@@ -539,13 +533,10 @@
             }
         };
 
-        // Функция переключения языков
         function switchLang(lang) {
-            // Меняем активную кнопку в шапке
             document.querySelectorAll('.lang-switch span').forEach(el => el.classList.remove('active'));
             document.getElementById(`btn-${lang}`).classList.add('active');
 
-            // Переводим стандартные элементы
             document.querySelectorAll('[data-i18n]').forEach(element => {
                 const key = element.getAttribute('data-i18n');
                 if (translations[lang][key]) {
@@ -553,11 +544,9 @@
                 }
             });
 
-            // Переводим блок "О нас" (так как там есть тег strong)
             document.getElementById('about-text-target').innerHTML = translations[lang]['aboutText'];
         }
 
-        // Подсветка активной кнопки в мобильном меню
         function setActiveNav(element) {
             document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
             element.classList.add('active');
