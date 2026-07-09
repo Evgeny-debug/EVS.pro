@@ -1,440 +1,262 @@
 <!DOCTYPE html>
-<html lang="uk">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    
-    <title>Evgeny Script & Dev | Enterprise Software Architecture</title>
-    <meta name="description" content="Розробка преміальних веб-проєктів, B2B автоматизація та архітектура масштабованих цифрових систем.">
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>More Nostro | Официальный сайт</title>
     <style>
-        /* Базові змінні - Матовий темний стиль */
+        /* Подключаем красивые шрифты */
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Playfair+Display:ital@0;1&display=swap');
+        
         :root {
-            --bg-main: #000000;
-            --bg-surface: #0a0a0a;
-            --bg-elevated: #111111;
-            
-            --text-primary: #ededed;
-            --text-secondary: #888888;
-            --text-muted: #444444;
-            
-            --border-light: rgba(255, 255, 255, 0.08);
-            --border-hover: rgba(255, 255, 255, 0.2);
-            
-            --accent: #ffffff;
-            --radius-md: 8px;
-            --radius-lg: 12px;
-            
-            --font-main: 'Inter', -apple-system, sans-serif;
+            --primary: #1A365D; /* Глубокий морской синий */
+            --accent: #D4AF37;  /* Золотой акцент */
+            --bg: #F8F9FA;      /* Светлый фон */
+            --text: #333333;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        html { scroll-behavior: smooth; }
-        
-        body { 
-            background-color: var(--bg-main); 
-            color: var(--text-primary); 
-            font-family: var(--font-main); 
-            line-height: 1.6; 
-            -webkit-font-smoothing: antialiased;
-            overflow-x: hidden;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
         }
 
-        ::selection { background: var(--accent); color: var(--bg-main); }
-
-        /* Типографіка */
-        h1, h2, h3, h4 { font-weight: 500; letter-spacing: -0.03em; line-height: 1.2; }
-        p { color: var(--text-secondary); font-size: 1.1rem; font-weight: 300; }
-        
-        .container { max-width: 1200px; margin: 0 auto; padding: 0 5%; }
-        
-        /* Анімація при скролі */
-        .reveal {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
         }
-        .reveal.active { opacity: 1; transform: translateY(0); }
-        .delay-1 { transition-delay: 0.1s; }
-        .delay-2 { transition-delay: 0.2s; }
-        .delay-3 { transition-delay: 0.3s; }
 
-        /* Навігація */
-        nav {
-            position: fixed; top: 0; left: 0; right: 0;
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 20px 5%;
-            background: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-bottom: 1px solid var(--border-light);
-            z-index: 1000;
-        }
-        .logo { font-size: 16px; font-weight: 600; letter-spacing: 0.05em; color: var(--text-primary); text-decoration: none; text-transform: uppercase; }
-        .contact-link {
-            font-size: 14px; font-weight: 500; color: var(--text-primary); text-decoration: none;
-            padding: 8px 16px; background: var(--bg-elevated); border: 1px solid var(--border-light);
-            border-radius: 6px; transition: all 0.3s ease;
-        }
-        .contact-link:hover { background: var(--accent); color: var(--bg-main); }
-
-        /* Вспливаюча плашка (Toast CTA) */
-        .toast-cta {
-            position: fixed;
-            top: 80px;
-            right: 5%;
-            background: rgba(15, 15, 15, 0.85);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid var(--border-light);
-            padding: 16px 40px 16px 20px;
-            border-radius: var(--radius-lg);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
-            z-index: 999;
-            transform: translateY(-150%);
-            opacity: 0;
-            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        /* Главный экран */
+        .hero {
+            height: 100vh;
+            /* Вставляем красивое фоновое изображение (замените на фото из их Инстаграма) */
+            background: linear-gradient(rgba(26, 54, 93, 0.6), rgba(26, 54, 93, 0.8)), url('https://images.unsplash.com/photo-1505118380757-91f5f5632de0?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') center/cover;
             display: flex;
+            flex-direction: column;
+            justify-content: center;
             align-items: center;
-            gap: 16px;
-        }
-        .toast-cta.show { transform: translateY(0); opacity: 1; }
-        .toast-text { font-size: 14px; font-weight: 500; color: var(--text-primary); }
-        .toast-btn {
-            background: var(--accent); color: var(--bg-main); text-decoration: none;
-            padding: 6px 12px; border-radius: 4px; font-size: 13px; font-weight: 600;
-        }
-        .toast-close {
-            position: absolute; top: 50%; right: 12px; transform: translateY(-50%);
-            background: none; border: none; color: var(--text-secondary);
-            font-size: 18px; cursor: pointer; transition: color 0.2s;
-        }
-        .toast-close:hover { color: var(--text-primary); }
-
-        /* Секції */
-        section { padding: 140px 0; border-bottom: 1px solid var(--border-light); }
-        .section-header { margin-bottom: 60px; max-width: 700px; }
-        .section-label { display: block; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); margin-bottom: 20px; }
-        .section-header h2 { font-size: 2.8rem; margin-bottom: 20px; color: var(--text-primary); }
-
-        /* Hero */
-        .hero { padding-top: 200px; padding-bottom: 120px; min-height: 90vh; display: flex; flex-direction: column; justify-content: center; }
-        .hero h1 { font-size: clamp(2.5rem, 8vw, 5.5rem); max-width: 1000px; margin-bottom: 24px; color: #ffffff; }
-        .hero p { max-width: 600px; font-size: 1.15rem; margin-bottom: 40px; }
-        .hero-stats { display: flex; gap: 40px; border-top: 1px solid var(--border-light); padding-top: 24px; max-width: 600px; }
-        .hero-stat-val { font-size: 2rem; font-weight: 500; color: var(--text-primary); line-height: 1.2; }
-        .hero-stat-label { font-size: 0.85rem; color: var(--text-secondary); }
-
-        /* Блок "Про підхід" */
-        .philosophy-content { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
-        .philosophy-text p { margin-bottom: 20px; }
-
-        /* Послуги (Grid) */
-        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; }
-        .service-card {
-            background: var(--bg-surface); border: 1px solid var(--border-light); padding: 40px;
-            border-radius: var(--radius-lg); transition: all 0.4s ease;
-        }
-        .service-card:hover { border-color: var(--border-hover); background: var(--bg-elevated); transform: translateY(-4px); }
-        .service-icon { width: 28px; height: 28px; stroke: var(--accent); stroke-width: 1.5; fill: none; margin-bottom: 32px; }
-        .service-card h3 { font-size: 1.4rem; margin-bottom: 12px; }
-        .service-card p { font-size: 1rem; color: var(--text-secondary); margin-bottom: 20px; }
-        .service-list { list-style: none; }
-        .service-list li { font-size: 0.9rem; color: var(--text-secondary); padding: 8px 0; border-top: 1px solid var(--border-light); }
-
-        /* Технологічний Стек */
-        .tech-grid { display: flex; flex-wrap: wrap; gap: 10px; }
-        .tech-tag {
-            padding: 10px 20px; background: var(--bg-surface); border: 1px solid var(--border-light);
-            border-radius: 6px; font-size: 0.9rem; color: var(--text-primary); font-weight: 500;
+            text-align: center;
+            color: white;
+            padding: 20px;
         }
 
-        /* Процес (Timeline) */
-        .workflow { display: flex; flex-direction: column; gap: 32px; }
-        .workflow-step { display: grid; grid-template-columns: 80px 1fr; gap: 20px; border-bottom: 1px solid var(--border-light); padding-bottom: 32px; }
-        .step-number { font-size: 1.2rem; color: var(--text-muted); font-weight: 600; }
-        .step-info h3 { font-size: 1.3rem; margin-bottom: 8px; }
-        .step-info p { font-size: 1rem; }
-
-        /* CTA */
-        .cta-wrapper { text-align: center; max-width: 800px; margin: 0 auto; }
-        .cta-wrapper h2 { font-size: 3rem; margin-bottom: 20px; }
-        .btn-large {
-            display: inline-block; padding: 18px 40px; font-size: 1.05rem; font-weight: 500;
-            background: var(--accent); color: var(--bg-main); text-decoration: none;
-            border-radius: 6px; margin-top: 32px; transition: transform 0.3s ease;
-        }
-        .btn-large:hover { transform: scale(1.02); }
-
-        /* Footer */
-        footer { padding: 60px 0; background: var(--bg-main); text-align: center; }
-        .footer-logo { font-size: 1.2rem; font-weight: 600; letter-spacing: 0.1em; margin-bottom: 12px; }
-        .footer-copy { color: var(--text-muted); font-size: 0.85rem; }
-
-        /* =========================================
-           АДАПТИВНІСТЬ (MOBILE OPTIMIZATION)
-           ========================================= */
-        @media (max-width: 900px) {
-            .philosophy-content { grid-template-columns: 1fr; gap: 24px; }
-            .section-header h2 { font-size: 2.2rem; }
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(3rem, 8vw, 5rem);
+            letter-spacing: 5px;
+            margin-bottom: 20px;
+            text-transform: uppercase;
         }
 
-        @media (max-width: 600px) {
-            /* Відступи секцій робимо меншими */
-            section { padding: 80px 0; }
-            .hero { padding-top: 140px; padding-bottom: 80px; min-height: auto; }
-            
-            /* Плашка (Toast) на мобільному стає на всю ширину */
-            .toast-cta { 
-                top: 80px; left: 5%; right: 5%; 
-                padding: 16px 36px 16px 16px; 
-                justify-content: space-between; 
-            }
-            .toast-text { font-size: 13px; }
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin-bottom: 40px;
+            font-weight: 300;
+        }
 
-            /* Статистика: 2 колонки на телефоні */
-            .hero-stats { 
-                grid-template-columns: 1fr 1fr; 
-                display: grid; 
-                gap: 20px; 
-                padding-top: 24px; 
-            }
-            .hero-stat-val { font-size: 1.8rem; }
-            .hero-stat-label { font-size: 0.8rem; line-height: 1.3; }
+        .btn {
+            padding: 15px 40px;
+            background-color: transparent;
+            border: 2px solid var(--accent);
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+        }
 
-            /* Картки послуг зменшують внутрішні відступи */
-            .service-card { padding: 24px; }
-            .service-icon { margin-bottom: 24px; }
-            
-            /* Теги технологій щільніше */
-            .tech-tag { padding: 8px 14px; font-size: 0.85rem; }
+        .btn:hover {
+            background-color: var(--accent);
+            color: white;
+        }
 
-            /* Процес: номер зверху, текст знизу */
-            .workflow-step { grid-template-columns: 1fr; gap: 8px; padding-bottom: 24px; }
-            .step-number { font-size: 1rem; margin-bottom: 4px; }
+        /* Секции */
+        section {
+            padding: 80px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
 
-            .cta-wrapper h2 { font-size: 2.2rem; }
-            .btn-large { width: 100%; text-align: center; padding: 16px 20px; }
+        h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 50px;
+            color: var(--primary);
+        }
+
+        /* Блок "О нас" */
+        .about {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+            font-size: 1.1rem;
+            color: #555;
+        }
+
+        /* Галерея товаров/услуг */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            height: 350px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.05);
+        }
+
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(26, 54, 93, 0.85);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .gallery-item:hover .overlay {
+            opacity: 1;
+        }
+
+        .overlay h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: var(--accent);
+        }
+
+        /* Подвал / Контакты */
+        footer {
+            background-color: var(--primary);
+            color: white;
+            text-align: center;
+            padding: 60px 20px 30px;
+            margin-top: 50px;
+        }
+
+        footer h2 {
+            color: white;
+            margin-bottom: 20px;
+        }
+
+        .social-links {
+            margin: 30px 0;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .social-links a {
+            padding: 12px 30px;
+            background-color: rgba(255,255,255,0.1);
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: all 0.3s;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .social-links a:hover {
+            background-color: var(--accent);
+            border-color: var(--accent);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            margin-top: 40px;
+            font-size: 0.9rem;
+            opacity: 0.6;
         }
     </style>
 </head>
 <body>
 
-    <nav>
-        <a href="#" class="logo">evs.pro</a>
-        <a href="https://t.me/evsdev" class="contact-link" target="_blank" rel="noopener">Contact ↗</a>
-    </nav>
+    <!-- Главный экран -->
+    <header class="hero">
+        <h1>More Nostro</h1>
+        <p>Эстетика в каждой детали. Ваш идеальный выбор.</p>
+        <a href="#gallery" class="btn">Смотреть каталог</a>
+    </header>
 
-    <div id="toast-cta" class="toast-cta">
-        <span class="toast-text">Відкритий до нових проєктів</span>
-        <a href="https://t.me/evsdev" class="toast-btn" target="_blank">Telegram</a>
-        <button class="toast-close" onclick="closeToast()">×</button>
-    </div>
+    <!-- О нас -->
+    <section id="about" class="about">
+        <h2>О бренде</h2>
+        <p>More Nostro — это не просто аккаунт в Instagram. Это философия качества и стиля. Мы создаем продукты, которые подчеркивают вашу индивидуальность. Удобный заказ, премиальное качество и любовь к своему делу в каждом заказе.</p>
+    </section>
 
-    <section class="hero">
-        <div class="container">
-            <h1 class="reveal">Engineering<br>Digital Assets.</h1>
-            <p class="reveal delay-1">Evgeny Script & Dev. Розробка програмного забезпечення корпоративного рівня. Ми будуємо автономні B2B-системи, масштабовані веб-додатки та інтелектуальні алгоритми автоматизації.</p>
-            
-            <div class="hero-stats reveal delay-2">
-                <div>
-                    <div class="hero-stat-val">32</div>
-                    <div class="hero-stat-label">Проєкти в релізі</div>
+    <!-- Галерея (Сюда потом пойдут фото из их инсты) -->
+    <section id="gallery">
+        <h2>Наши работы</h2>
+        <div class="gallery">
+            <div class="gallery-item">
+                <img src="https://images.unsplash.com/photo-1611085583191-a3b181a88401?auto=format&fit=crop&w=600&q=80" alt="Item 1">
+                <div class="overlay">
+                    <h3>Новая коллекция</h3>
+                    <p>Посмотреть детали и цены</p>
                 </div>
-                <div>
-                    <div class="hero-stat-val">14</div>
-                    <div class="hero-stat-label">Активних B2B систем</div>
+            </div>
+            <div class="gallery-item">
+                <img src="https://images.unsplash.com/photo-1434389678369-182cb14f27f8?auto=format&fit=crop&w=600&q=80" alt="Item 2">
+                <div class="overlay">
+                    <h3>Бестселлер</h3>
+                    <p>Выбор наших клиентов</p>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="https://images.unsplash.com/photo-1515347619152-475a13ecbf0e?auto=format&fit=crop&w=600&q=80" alt="Item 3">
+                <div class="overlay">
+                    <h3>Эксклюзив</h3>
+                    <p>Ограниченная серия</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="philosophy">
-        <div class="container">
-            <div class="section-header reveal">
-                <span class="section-label">01 / Архітектура мислення</span>
-                <h2>Код — це інструмент.<br>Головне — бізнес-логіка.</h2>
-            </div>
-            
-            <div class="philosophy-content">
-                <div class="philosophy-text reveal delay-1">
-                    <p>Сучасна розробка вимагає більше, ніж просто написання рядків коду. Вона вимагає глибокого розуміння того, як продукт буде генерувати прибуток, обробляти навантаження та економити час власника.</p>
-                    <p>Мій підхід базується на концепції <strong>Vibe Coding</strong> — синергії інженерного досвіду та інтеграції AI-інструментів для надшвидкого прототипування. Це дозволяє скоротити час розробки від місяців до тижнів.</p>
-                </div>
-                <div class="philosophy-text reveal delay-2">
-                    <p>Я не створюю шаблони. Я проєктую <strong>цифрові активи</strong>: парсери, що знаходять клієнтів 24/7, Telegram-боти, які автоматизують відділи продажів, та HighLoad-платформи.</p>
-                    <p>Кожен рядок коду написаний з думкою про масштабування, безпеку даних та бездоганний користувацький досвід (UX/UI).</p>
-                </div>
-            </div>
+    <!-- Контакты -->
+    <footer id="contacts">
+        <h2>Оформить заказ</h2>
+        <p>Свяжитесь с нами удобным для вас способом для консультации или заказа</p>
+        <div class="social-links">
+            <a href="https://www.instagram.com/more.nostro?igsh=MWtqeHdpMWVhMW9wdw==" target="_blank">Instagram</a>
+            <a href="#whatsapp">WhatsApp</a>
+            <a href="#telegram">Telegram</a>
         </div>
-    </section>
-
-    <section id="services">
-        <div class="container">
-            <div class="section-header reveal">
-                <span class="section-label">02 / Експертиза</span>
-                <h2>Напрямки розробки</h2>
-                <p>Повний цикл створення програмного забезпечення: від проєктування бази даних до розгортання на сервері.</p>
-            </div>
-
-            <div class="services-grid">
-                <div class="service-card reveal">
-                    <svg class="service-icon" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
-                    <h3>B2B Автоматизація</h3>
-                    <p>Створення автономних скриптів для збору, обробки та маршрутизації великих масивів даних.</p>
-                    <ul class="service-list">
-                        <li>Синтез сировини (Scraping)</li>
-                        <li>NLU Аналізатори контенту</li>
-                        <li>Інтеграція з Google Maps API</li>
-                    </ul>
-                </div>
-
-                <div class="service-card reveal delay-1">
-                    <svg class="service-icon" viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg>
-                    <h3>Telegram Інфраструктура</h3>
-                    <p>Розробка багатопотокових ботів та юзерботів для моніторингу чатів та лідогенерації.</p>
-                    <ul class="service-list">
-                        <li>HighLoad Боти для бізнесу</li>
-                        <li>Авто-аудитори та модератори</li>
-                        <li>Складні воронки продажів</li>
-                    </ul>
-                </div>
-
-                <div class="service-card reveal delay-2">
-                    <svg class="service-icon" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
-                    <h3>Full-Stack Розробка</h3>
-                    <p>Проєктування та розробка швидкодіючих веб-додатків та преміальних Landing Pages.</p>
-                    <ul class="service-list">
-                        <li>Single Page Apps (SPA)</li>
-                        <li>Проєктування БД (SQLite, SQL)</li>
-                        <li>Бездоганний Modern UI/UX</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="stack" style="background-color: var(--bg-surface);">
-        <div class="container">
-            <div class="section-header reveal">
-                <span class="section-label">03 / Технології</span>
-                <h2>Інструментарій</h2>
-                <p>Сучасний та надійний стек технологій, що гарантує безпеку та продуктивність кожної системи.</p>
-            </div>
-            
-            <div class="tech-grid reveal delay-1">
-                <div class="tech-tag">JavaScript / ES6+</div>
-                <div class="tech-tag">Node.js</div>
-                <div class="tech-tag">TypeScript</div>
-                <div class="tech-tag">Python</div>
-                <div class="tech-tag">React</div>
-                <div class="tech-tag">Vanilla JS</div>
-                <div class="tech-tag">HTML5 / CSS3</div>
-                <div class="tech-tag">Tailwind CSS</div>
-                <div class="tech-tag">SQLite (WAL Mode)</div>
-                <div class="tech-tag">PostgreSQL</div>
-                <div class="tech-tag">GramJS / MTProto</div>
-                <div class="tech-tag">Axios / Cheerio</div>
-            </div>
-        </div>
-    </section>
-
-    <section id="process">
-        <div class="container">
-            <div class="section-header reveal">
-                <span class="section-label">04 / Взаємодія</span>
-                <h2>Прозорий процес розробки</h2>
-            </div>
-
-            <div class="workflow">
-                <div class="workflow-step reveal">
-                    <div class="step-number">01</div>
-                    <div class="step-info">
-                        <h3>Аналіз та Архітектура</h3>
-                        <p>Глибоке занурення в бізнес-задачу. Створення схеми бази даних, визначення стеків технологій та побудова логіки.</p>
-                    </div>
-                </div>
-                <div class="workflow-step reveal">
-                    <div class="step-number">02</div>
-                    <div class="step-info">
-                        <h3>Розробка Ядра (Core)</h3>
-                        <p>Написання бекенду. Створення асинхронних потоків, інтеграція зовнішніх API та налаштування локального середовища.</p>
-                    </div>
-                </div>
-                <div class="workflow-step reveal">
-                    <div class="step-number">03</div>
-                    <div class="step-info">
-                        <h3>Інтерфейс та Зв'язок</h3>
-                        <p>Розробка візуальної частини (Web або Telegram UI). Налаштування системи сповіщень та дашбордів для моніторингу.</p>
-                    </div>
-                </div>
-                <div class="workflow-step reveal" style="border-bottom: none;">
-                    <div class="step-number">04</div>
-                    <div class="step-info">
-                        <h3>Тестування та Реліз</h3>
-                        <p>Стрес-тести під навантаженням. Деплой системи на бойовий сервер та передача готового продукту клієнту.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="hero" style="min-height: auto; padding: 100px 0;">
-        <div class="container">
-            <div class="cta-wrapper reveal">
-                <h2>Ініціювати проєкт</h2>
-                <p>Маєте завдання, що потребує системного підходу? Зв'яжіться зі мною напряму для обговорення технічного завдання та термінів реалізації.</p>
-                <a href="https://t.me/evsdev" class="btn-large" target="_blank" rel="noopener">Написати в Telegram</a>
-            </div>
-        </div>
-    </section>
-
-    <footer>
-        <div class="container">
-            <div class="logo" style="margin-bottom: 12px; color: var(--text-muted);">EVS.PRO</div>
-            <div class="footer-copy">© 2026 Evgeny Script & Dev. Odesa, UA.<br>Engineered for High Performance.</div>
+        <div class="copyright">
+            &copy; 2026 More Nostro. Все права защищены. <br>
+            Сайт разработан [Твое Имя/Студия]
         </div>
     </footer>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // 1. Анімації скролу (Intersection Observer)
-            const observerOptions = { root: null, rootMargin: '0px', threshold: 0.15 };
-            const observer = new IntersectionObserver((entries, observer) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('active');
-                        observer.unobserve(entry.target); // Анімація програється лише один раз
-                    }
-                });
-            }, observerOptions);
-
-            document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
-            // 2. Логіка плаваючої плашки (Toast CTA)
-            const toast = document.getElementById('toast-cta');
-            
-            // Показуємо через 1 секунду після завантаження
-            setTimeout(() => {
-                toast.classList.add('show');
-                
-                // Ховаємо автоматично рівно через 3 секунди
-                window.toastTimer = setTimeout(() => {
-                    closeToast();
-                }, 8000);
-            }, 1000);
-        });
-
-        // Функція закриття плашки (через хрестик або по таймеру)
-        function closeToast() {
-            const toast = document.getElementById('toast-cta');
-            toast.classList.remove('show');
-            if (window.toastTimer) clearTimeout(window.toastTimer);
-        }
-    </script>
 </body>
 </html>
