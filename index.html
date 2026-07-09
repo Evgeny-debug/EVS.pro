@@ -3,21 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>More Nostro | Official Site</title>
-    <!-- Іконки для нижнього бару -->
+    <title>More Nostro | Premium Fashion</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* Підключення люксових шрифтів */
-        @import url('https://fonts.googleapis.com/css2?family=Italiana&family=Montserrat:wght@200;300;400;500&display=swap');
+        /* Люксовые шрифты: тонкие, изящные */
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500&family=Montserrat:wght@200;300;400&display=swap');
         
         :root {
-            --primary-dark: #070c12;
-            --accent-gold: #d4af37;
-            --bg-light: #fdfcfb;
-            --text-dark: #1a1a1a;
-            --text-muted: #666666;
-            --text-light: #ffffff;
-            --glass-border: rgba(255, 255, 255, 0.15);
+            --dark: #111111;
+            --dark-muted: #2a2a2a;
+            --light: #faf9f6; /* Оттенок слоновой кости, не чистый белый */
+            --accent: #bda588; /* Приглушенное шампанское/песочный */
+            --text-main: #1a1a1a;
         }
 
         * {
@@ -29,71 +26,87 @@
 
         body {
             font-family: 'Montserrat', sans-serif;
-            background-color: var(--bg-light);
-            color: var(--text-dark);
+            background-color: var(--light);
+            color: var(--text-main);
             -webkit-tap-highlight-color: transparent;
-            letter-spacing: 0.5px;
         }
 
-        /* Шапка сайту (Glassmorphism) */
+        /* Ультра-минималистичная шапка */
         header {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
-            padding: 25px 8%;
+            padding: 30px 8%;
             display: flex;
             justify-content: space-between;
             align-items: center;
             z-index: 100;
-            background: rgba(7, 12, 18, 0.15);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            background: linear-gradient(to bottom, rgba(17,17,17,0.7) 0%, rgba(17,17,17,0) 100%);
+            transition: all 0.4s ease;
+        }
+
+        header.scrolled {
+            background: rgba(250, 249, 246, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0,0,0,0.05);
         }
 
         .logo {
-            font-family: 'Italiana', serif;
-            font-size: 2rem;
-            color: var(--text-light);
+            font-family: 'Cinzel', serif;
+            font-size: 1.8rem;
+            color: #fff;
             text-transform: uppercase;
-            letter-spacing: 6px;
+            letter-spacing: 8px;
             text-decoration: none;
-            transition: 0.3s;
+            transition: 0.4s;
         }
 
-        /* Перемикач мов */
+        header.scrolled .logo, header.scrolled .lang-switch {
+            color: var(--dark);
+        }
+
+        /* Переключатель языков */
         .lang-switch {
             display: flex;
-            gap: 20px;
-            color: var(--text-light);
-            font-size: 0.85rem;
-            font-weight: 400;
-            letter-spacing: 2px;
+            gap: 25px;
+            color: #fff;
+            font-size: 0.75rem;
+            letter-spacing: 3px;
+            transition: 0.4s;
         }
 
         .lang-switch span {
             cursor: pointer;
-            opacity: 0.4;
+            opacity: 0.5;
             transition: 0.3s;
+            position: relative;
         }
 
-        .lang-switch span.active, .lang-switch span:hover {
+        .lang-switch span.active {
             opacity: 1;
-            color: var(--accent-gold);
         }
 
-        /* Головний екран (Hero) */
+        .lang-switch span.active::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background-color: currentColor;
+        }
+
+        /* Главный экран - Журнальная обложка */
         .hero {
             position: relative;
             height: 100vh;
-            overflow: hidden;
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
-            color: var(--text-light);
-            background-color: var(--primary-dark);
+            background-color: var(--dark);
+            overflow: hidden;
         }
 
         .hero-bg {
@@ -102,302 +115,215 @@
             left: 0;
             width: 100%;
             height: 100%;
-            /* Тематичне люксове тло: темна текстура тканини/фешн естетика */
-            background: url('https://images.unsplash.com/photo-1610427618991-314051052695?q=80&w=1920&auto=format&fit=crop') center/cover no-repeat;
-            animation: kenBurns 24s infinite alternate linear;
-            z-index: 1;
-        }
-
-        .hero-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(180deg, rgba(7,12,18,0.3) 0%, rgba(7,12,18,0.8) 100%);
-            z-index: 2;
+            background: url('https://images.unsplash.com/photo-1583391733958-d25e07fac80b?q=80&w=1920&auto=format&fit=crop') center/cover no-repeat;
+            opacity: 0.6;
+            animation: slowZoom 20s infinite alternate linear;
         }
 
         .hero-content {
             position: relative;
-            z-index: 3;
-            max-width: 900px;
-            padding: 0 30px;
-            animation: fadeIn 2s ease-out;
+            z-index: 2;
+            max-width: 800px;
+            padding: 0 20px;
         }
 
         .hero-content h1 {
-            font-family: 'Italiana', serif;
-            font-size: clamp(2.5rem, 7vw, 5rem);
-            font-weight: 400;
-            line-height: 1.2;
-            margin-bottom: 25px;
-            text-transform: uppercase;
-            letter-spacing: 4px;
-        }
-
-        .hero-content p {
-            font-size: 1.1rem;
-            font-weight: 200;
-            margin-bottom: 50px;
-            letter-spacing: 2px;
-            color: #f0f0f0;
-            line-height: 1.8;
-        }
-
-        .btn {
-            display: inline-block;
-            padding: 18px 50px;
-            background-color: transparent;
-            border: 1px solid rgba(255,255,255,0.3);
-            color: var(--text-light);
-            text-decoration: none;
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
-        }
-
-        .btn:hover {
-            border-color: var(--accent-gold);
-            background-color: var(--text-light);
-            color: var(--primary-dark);
-            transform: translateY(-2px);
-        }
-
-        /* Повітряні секції */
-        section {
-            padding: 160px 8%;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        .section-title {
-            font-family: 'Italiana', serif;
-            font-size: 3.2rem;
-            text-align: center;
-            margin-bottom: 80px;
-            color: var(--primary-dark);
+            font-family: 'Cinzel', serif;
+            font-size: clamp(2rem, 5vw, 4.5rem);
+            color: #fff;
             font-weight: 400;
             letter-spacing: 6px;
             text-transform: uppercase;
+            margin-bottom: 20px;
+            line-height: 1.3;
         }
 
-        /* Про бренд */
-        .about-box {
-            text-align: center;
-            max-width: 850px;
+        .hero-content p {
+            color: #e0e0e0;
+            font-size: 0.9rem;
+            font-weight: 300;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            margin-bottom: 50px;
+        }
+
+        .btn-outline {
+            display: inline-block;
+            padding: 15px 40px;
+            border: 1px solid #fff;
+            color: #fff;
+            text-decoration: none;
+            font-size: 0.75rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            transition: 0.4s;
+        }
+
+        .btn-outline:hover {
+            background: #fff;
+            color: var(--dark);
+        }
+
+        /* Секции - Много воздуха */
+        section {
+            padding: 180px 8%;
+            max-width: 1600px;
             margin: 0 auto;
-            font-size: 1.2rem;
-            line-height: 2.2;
-            color: var(--text-muted);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 100px;
+        }
+
+        .section-title {
+            font-family: 'Cinzel', serif;
+            font-size: 2.5rem;
+            font-weight: 400;
+            color: var(--dark);
+            letter-spacing: 8px;
+            text-transform: uppercase;
+        }
+
+        /* Текст о бренде */
+        .about-text {
+            max-width: 700px;
+            margin: 0 auto;
+            text-align: center;
+            font-size: 1.1rem;
+            line-height: 2.4;
+            color: var(--dark-muted);
             font-weight: 300;
         }
 
-        .about-box strong {
-            color: var(--primary-dark);
-            font-weight: 400;
-            letter-spacing: 1px;
-        }
-
-        /* Галерея */
-        .gallery-grid {
+        /* Editorial Галерея (Журнальный стиль) */
+        .editorial-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-            gap: 50px;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 60px;
         }
 
-        .gallery-item {
-            position: relative;
-            overflow: hidden;
-            height: 550px;
-            background: #e8e3d9;
+        .editorial-item {
             display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 4px;
+            flex-direction: column;
+            cursor: pointer;
         }
 
-        .gallery-item img {
+        .img-wrapper {
+            position: relative;
+            width: 100%;
+            padding-top: 130%; /* Пропорции 3:4 (Fashion Portrait) */
+            overflow: hidden;
+            margin-bottom: 25px;
+        }
+
+        .img-wrapper img {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 1.2s cubic-bezier(0.25, 1, 0.5, 1);
-            z-index: 2;
+            filter: grayscale(20%);
+            transition: transform 1.5s cubic-bezier(0.19, 1, 0.22, 1), filter 1s ease;
         }
 
-        .gallery-item:hover img {
-            transform: scale(1.05);
+        .editorial-item:hover .img-wrapper img {
+            transform: scale(1.04);
+            filter: grayscale(0%);
         }
 
-        /* Скляні картки поверх фото */
-        .item-glass-card {
-            position: absolute;
-            bottom: 30px;
-            left: 5%;
-            width: 90%;
-            padding: 25px 20px;
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border: 1px solid var(--glass-border);
+        .item-meta {
             text-align: center;
-            z-index: 3;
-            transition: 0.4s;
-            border-radius: 2px;
         }
 
-        .gallery-item:hover .item-glass-card {
-            background: rgba(7, 12, 18, 0.85);
-            color: white;
-            border-color: var(--accent-gold);
-        }
-
-        .item-glass-card h3 {
-            font-family: 'Italiana', serif;
-            font-size: 1.8rem;
-            font-weight: 400;
-            margin-bottom: 8px;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            transition: 0.4s;
-        }
-
-        .item-glass-card span {
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            color: #8c7653;
-            font-weight: 400;
-            transition: 0.4s;
-        }
-        
-        .gallery-item:hover .item-glass-card span {
-            color: var(--accent-gold);
-        }
-
-        /* Підвал сайту */
-        footer {
-            background-color: var(--primary-dark);
-            color: var(--text-light);
-            text-align: center;
-            padding: 140px 20px 60px;
-        }
-
-        footer h2 {
-            font-family: 'Italiana', serif;
-            font-size: 3rem;
-            margin-bottom: 25px;
+        .item-meta h3 {
+            font-family: 'Cinzel', serif;
+            font-size: 1.4rem;
             font-weight: 400;
             letter-spacing: 4px;
             text-transform: uppercase;
+            margin-bottom: 8px;
+            color: var(--dark);
+        }
+
+        .item-meta span {
+            font-size: 0.75rem;
+            color: var(--accent);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* Футер */
+        footer {
+            background-color: var(--dark);
+            color: #fff;
+            text-align: center;
+            padding: 120px 8% 60px;
+        }
+
+        footer h2 {
+            font-family: 'Cinzel', serif;
+            font-size: 2.2rem;
+            font-weight: 400;
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
         }
 
         footer p {
+            font-size: 0.85rem;
             font-weight: 200;
-            letter-spacing: 2px;
-            margin-bottom: 50px;
-            opacity: 0.7;
+            letter-spacing: 3px;
+            color: rgba(255,255,255,0.6);
+            margin-bottom: 60px;
         }
 
-        .instagram-btn {
+        .btn-solid {
             display: inline-block;
-            padding: 20px 50px;
-            background-color: var(--accent-gold);
-            color: var(--primary-dark);
+            padding: 16px 45px;
+            background-color: var(--accent);
+            color: var(--light);
             text-decoration: none;
-            font-size: 0.85rem;
-            font-weight: 500;
+            font-size: 0.75rem;
             letter-spacing: 3px;
             text-transform: uppercase;
             transition: 0.4s;
         }
 
-        .instagram-btn:hover {
-            background-color: var(--text-light);
-            transform: translateY(-3px);
+        .btn-solid:hover {
+            background-color: #fff;
+            color: var(--dark);
         }
 
-        .dev-credit {
+        .copyright {
             margin-top: 100px;
-            font-size: 0.75rem;
-            opacity: 0.4;
-            letter-spacing: 2px;
+            font-size: 0.65rem;
+            letter-spacing: 4px;
+            color: rgba(255,255,255,0.3);
             text-transform: uppercase;
         }
 
-        /* Мобільний Нижній Бар (Glassmorphism) */
-        .bottom-nav {
-            display: none;
-        }
-
-        @media (max-width: 768px) {
-            header { padding: 20px 5%; }
-            section { padding: 100px 20px; }
-            .section-title { font-size: 2.4rem; margin-bottom: 50px; }
-            
-            body { padding-bottom: 80px; }
-
-            .bottom-nav {
-                display: flex;
-                justify-content: space-around;
-                align-items: center;
-                position: fixed;
-                bottom: 20px;
-                left: 5%;
-                width: 90%;
-                height: 65px;
-                background: rgba(7, 12, 18, 0.85);
-                backdrop-filter: blur(20px);
-                -webkit-backdrop-filter: blur(20px);
-                border: 1px solid rgba(255, 255, 255, 0.1);
-                border-radius: 30px;
-                box-shadow: 0 10px 30px rgba(0,0,0,0.4);
-                z-index: 1000;
-                padding: 0 10px;
-            }
-
-            .nav-item {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                text-decoration: none;
-                color: rgba(255, 255, 255, 0.5);
-                font-size: 0.6rem;
-                text-transform: uppercase;
-                letter-spacing: 1.5px;
-                transition: 0.3s;
-            }
-
-            .nav-item i {
-                font-size: 1.1rem;
-                margin-bottom: 4px;
-            }
-
-            .nav-item.active, .nav-item:hover {
-                color: var(--accent-gold);
-            }
-        }
-
-        /* Анімації */
-        @keyframes kenBurns {
+        /* Анимации */
+        @keyframes slowZoom {
             0% { transform: scale(1); }
-            100% { transform: scale(1.12); }
+            100% { transform: scale(1.1); }
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+        /* Моб. адаптация */
+        @media (max-width: 768px) {
+            header { padding: 25px 5%; }
+            .logo { font-size: 1.4rem; }
+            section { padding: 100px 5%; }
+            .section-title { font-size: 1.8rem; }
+            .editorial-grid { gap: 40px; }
+            .img-wrapper { padding-top: 140%; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Навігація -->
-    <header>
+    <header id="navbar">
         <a href="#" class="logo">More Nostro</a>
         <div class="lang-switch">
             <span id="btn-ua" class="active" onclick="switchLang('ua')">UA</span>
@@ -405,131 +331,103 @@
         </div>
     </header>
 
-    <!-- Головний Екран -->
-    <div class="hero" id="home">
+    <div class="hero">
         <div class="hero-bg"></div>
-        <div class="hero-overlay"></div>
         <div class="hero-content">
-            <h1 data-i18n="heroTitle">Мода, що говорить твоєю мовою</h1>
-            <p data-i18n="heroSub">Індивідуальний пошив. Ексклюзивні вишиті костюми та корсети, натхненні традиціями.</p>
-            <a href="#catalog" class="btn" data-i18n="heroBtn">Переглянути колекцію</a>
+            <h1 data-i18n="heroTitle">Естетика традицій</h1>
+            <p data-i18n="heroSub">Індивідуальний пошив · Власне виробництво</p>
+            <a href="#collection" class="btn-outline" data-i18n="heroBtn">Дивитись колекцію</a>
         </div>
     </div>
 
-    <!-- Про Бренд -->
     <section id="about">
-        <h2 class="section-title" data-i18n="aboutTitle">Про бренд</h2>
-        <div class="about-box">
-            <p id="about-text-target"><strong>More Nostro</strong> — це не просто одяг, це маніфест вашої індивідуальності. Ми створюємо унікальні речі, поєднуючи сучасні силуети зі старовинними техніками вишивки. Кожен корсет та костюм — це ручна робота, власне виробництво та бездоганна увага до деталей.</p>
+        <div class="section-header">
+            <h2 class="section-title" data-i18n="aboutTitle">Маніфест</h2>
+        </div>
+        <div class="about-text">
+            <p id="aboutTextTarget">More Nostro — мода, що говорить твоєю мовою. Ми переосмислюємо українську спадщину через призму сучасного кутюр. Кожен стібок, кожна деталь створені вручную, щоб підкреслити твою унікальність та бездоганний смак.</p>
         </div>
     </section>
 
-    <!-- Каталог -->
-    <section id="catalog">
-        <h2 class="section-title" data-i18n="catalogTitle">Вибрані моделі</h2>
-        <div class="gallery-grid">
+    <section id="collection">
+        <div class="editorial-grid">
             
-            <!-- Картка 1: Корсети -->
-            <div class="gallery-item">
-                <img src="image_4.png" alt="Corsets">
-                <div class="item-glass-card">
+            <div class="editorial-item">
+                <div class="img-wrapper">
+                    <img src="IMG_1746.jpeg" alt="Corset Kvitna">
+                </div>
+                <div class="item-meta">
                     <h3 data-i18n="cat1Title">Корсети</h3>
-                    <span data-i18n="cat1Sub">Індивідуальний дизайн</span>
+                    <span data-i18n="cat1Sub">Ручна вишивка</span>
                 </div>
             </div>
 
-            <!-- Картка 2: Костюми -->
-            <div class="gallery-item">
-                <img src="image_5.png" alt="Suits">
-                <div class="item-glass-card">
-                    <h3 data-i18n="cat2Title">Вишиті костюми</h3>
-                    <span data-i18n="cat2Sub">Преміум якість</span>
+            <div class="editorial-item">
+                <div class="img-wrapper">
+                    <img src="IMG_1745.jpeg" alt="Red Suit">
+                </div>
+                <div class="item-meta">
+                    <h3 data-i18n="cat2Title">Костюми</h3>
+                    <span data-i18n="cat2Sub">Преміальні тканини</span>
                 </div>
             </div>
 
-            <!-- Картка 3: Limited -->
-            <div class="gallery-item">
-                <img src="image_3.png" alt="Limited Edition">
-                <div class="item-glass-card">
+            <div class="editorial-item">
+                <div class="img-wrapper">
+                    <img src="IMG_1748.jpeg" alt="Limited Details">
+                </div>
+                <div class="item-meta">
                     <h3 data-i18n="cat3Title">Limited Edition</h3>
-                    <span data-i18n="cat3Sub">Ексклюзивні орнаменти</span>
+                    <span data-i18n="cat3Sub">Ексклюзив</span>
                 </div>
             </div>
 
         </div>
     </section>
 
-    <!-- Контакти / Підвал -->
-    <footer id="contact">
-        <h2 data-i18n="footerTitle">Створи свій ідеальний образ</h2>
-        <p data-i18n="footerSub">Зв'яжіться з нами для консультації та замовлення</p>
-        <a href="https://www.instagram.com/more.nostro?igsh=MWtqeHdpMWVhMW9wdw==" target="_blank" class="instagram-btn">
-            <i class="fab fa-instagram" style="margin-right: 10px;"></i> <span data-i18n="footerBtn">Написати в Instagram</span>
-        </a>
-        <div class="dev-credit">
-            &copy; 2026 More Nostro. All rights reserved.<br>
-            Developer: EVSdev
+    <footer>
+        <h2 data-i18n="footerTitle">Створити образ</h2>
+        <p data-i18n="footerSub">Залиште заявку на індивідуальне пошиття</p>
+        <a href="https://www.instagram.com/more.nostro" target="_blank" class="btn-solid" data-i18n="footerBtn">Зв'язок в Instagram</a>
+        
+        <div class="copyright">
+            © 2026 More Nostro. Design by EVS.pro
         </div>
     </footer>
 
-    <!-- Мобільний Нижній Бар -->
-    <div class="bottom-nav">
-        <a href="#home" class="nav-item active" onclick="setActiveNav(this)">
-            <i class="fas fa-home"></i>
-            <span data-i18n="navHome">Головна</span>
-        </a>
-        <a href="#catalog" class="nav-item" onclick="setActiveNav(this)">
-            <i class="fas fa-th-large"></i>
-            <span data-i18n="navCatalog">Каталог</span>
-        </a>
-        <a href="#contact" class="nav-item" onclick="setActiveNav(this)">
-            <i class="fas fa-envelope"></i>
-            <span data-i18n="navContact">Зв'язок</span>
-        </a>
-    </div>
-
-    <!-- Скрипт перекладу та навігації -->
     <script>
         const translations = {
             ua: {
-                heroTitle: "Мода, що говорить твоєю мовою",
-                heroSub: "Індивідуальний пошив. Ексклюзивні вишиті костюми та корсети, натхненні традиціями.",
-                heroBtn: "Переглянути колекцію",
-                aboutTitle: "Про бренд",
-                aboutText: "<strong>More Nostro</strong> — це не просто одяг, це маніфест вашої індивідуальності. Ми створюємо унікальні речі, поєднуючи сучасні силуети зі старовинними техніками вишивки. Кожен корсет та костюм — це ручна робота, власне виробництво та бездоганна увага до деталей.",
-                catalogTitle: "Вибрані моделі",
+                heroTitle: "Естетика традицій",
+                heroSub: "Індивідуальний пошив · Власне виробництво",
+                heroBtn: "Дивитись колекцію",
+                aboutTitle: "Маніфест",
+                aboutText: "More Nostro — мода, що говорить твоєю мовою. Ми переосмислюємо українську спадщину через призму сучасного кутюр. Кожен стібок, кожна деталь створені вручную, щоб підкреслити твою унікальність та бездоганний смак.",
                 cat1Title: "Корсети",
-                cat1Sub: "Індивідуальний дизайн",
-                cat2Title: "Вишиті костюми",
-                cat2Sub: "Преміум якість",
+                cat1Sub: "Ручна вишивка",
+                cat2Title: "Костюми",
+                cat2Sub: "Преміальні тканини",
                 cat3Title: "Limited Edition",
-                cat3Sub: "Ексклюзивні орнаменти",
-                footerTitle: "Створи свій ідеальний образ",
-                footerSub: "Зв'яжіться з нами для консультації та замовлення",
-                footerBtn: "Написати в Instagram",
-                navHome: "Головна",
-                navCatalog: "Каталог",
-                navContact: "Зв'язок"
+                cat3Sub: "Ексклюзив",
+                footerTitle: "Створити образ",
+                footerSub: "Залиште заявку на індивідуальне пошиття",
+                footerBtn: "Зв'язок в Instagram"
             },
             en: {
-                heroTitle: "Fashion that speaks your language",
-                heroSub: "Bespoke tailoring. Exclusive embroidered suits and corsets, inspired by traditions.",
+                heroTitle: "Aesthetics of Heritage",
+                heroSub: "Bespoke tailoring · In-house production",
                 heroBtn: "View Collection",
-                aboutTitle: "About Brand",
-                aboutText: "<strong>More Nostro</strong> is not just clothing, it is a manifesto of your individuality. We create unique pieces, combining modern silhouettes with ancient embroidery techniques. Each corset and suit is handmade, our own production and flawless attention to detail.",
-                catalogTitle: "Selected Models",
+                aboutTitle: "Manifesto",
+                aboutText: "More Nostro — fashion that speaks your language. We reinterpret Ukrainian heritage through the lens of modern couture. Every stitch, every detail is handcrafted to highlight your uniqueness and flawless taste.",
                 cat1Title: "Corsets",
-                cat1Sub: "Bespoke Design",
-                cat2Title: "Embroidered Suits",
-                cat2Sub: "Premium Quality",
+                cat1Sub: "Hand Embroidery",
+                cat2Title: "Suits",
+                cat2Sub: "Premium Fabrics",
                 cat3Title: "Limited Edition",
-                cat3Sub: "Exclusive Ornaments",
-                footerTitle: "Create Your Perfect Look",
-                footerSub: "Contact us for consultation and order",
-                footerBtn: "Message on Instagram",
-                navHome: "Home",
-                navCatalog: "Catalog",
-                navContact: "Contact"
+                cat3Sub: "Exclusive",
+                footerTitle: "Create Your Look",
+                footerSub: "Leave a request for bespoke tailoring",
+                footerBtn: "Contact via Instagram"
             }
         };
 
@@ -543,14 +441,18 @@
                     element.textContent = translations[lang][key];
                 }
             });
-
-            document.getElementById('about-text-target').innerHTML = translations[lang]['aboutText'];
+            document.getElementById('aboutTextTarget').textContent = translations[lang]['aboutText'];
         }
 
-        function setActiveNav(element) {
-            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
-            element.classList.add('active');
-        }
+        // Изменение цвета шапки при скролле для премиального эффекта
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
     </script>
 </body>
 </html>
