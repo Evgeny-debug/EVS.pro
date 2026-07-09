@@ -1,18 +1,20 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="uk">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>More Nostro | Официальный сайт</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>More Nostro | Мода, що говорить твоєю мовою</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* Подключаем красивые шрифты */
-        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Playfair+Display:ital@0;1&display=swap');
+        /* Шрифти: елегантний для заголовків, чистий для тексту */
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Jost:wght@300;400;500&display=swap');
         
         :root {
-            --primary: #1A365D; /* Глубокий морской синий */
-            --accent: #D4AF37;  /* Золотой акцент */
-            --bg: #F8F9FA;      /* Светлый фон */
-            --text: #333333;
+            --primary-dark: #0a1118; /* Глибокий синій/чорний з логотипу */
+            --accent-gold: #c5a880;  /* Золотистий/бежевий акцент */
+            --bg-light: #fbfaf8;     /* Теплий світлий фон */
+            --text-dark: #222222;
+            --text-light: #ffffff;
         }
 
         * {
@@ -23,240 +25,415 @@
         }
 
         body {
-            font-family: 'Montserrat', sans-serif;
-            background-color: var(--bg);
-            color: var(--text);
-            line-height: 1.6;
+            font-family: 'Jost', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            -webkit-tap-highlight-color: transparent;
         }
 
-        /* Главный экран */
-        .hero {
-            height: 100vh;
-            /* Вставляем красивое фоновое изображение (замените на фото из их Инстаграма) */
-            background: linear-gradient(rgba(26, 54, 93, 0.6), rgba(26, 54, 93, 0.8)), url('https://images.unsplash.com/photo-1505118380757-91f5f5632de0?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') center/cover;
+        /* Навігація верхня (для ПК) */
+        header {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 30px 50px;
             display: flex;
-            flex-direction: column;
-            justify-content: center;
+            justify-content: space-between;
             align-items: center;
-            text-align: center;
-            color: white;
-            padding: 20px;
+            z-index: 10;
         }
 
-        .hero h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(3rem, 8vw, 5rem);
-            letter-spacing: 5px;
+        .logo {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.8rem;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            text-decoration: none;
+        }
+
+        /* Перемикач мов */
+        .lang-switch {
+            display: flex;
+            gap: 15px;
+            color: var(--text-light);
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .lang-switch span {
+            cursor: pointer;
+            opacity: 0.5;
+            transition: 0.3s;
+        }
+
+        .lang-switch span.active, .lang-switch span:hover {
+            opacity: 1;
+            color: var(--accent-gold);
+        }
+
+        /* Головний екран (Hero) з анімацією Ken Burns */
+        .hero {
+            position: relative;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: var(--text-light);
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            /* Замінено на стильне журнальне фото (тканини/фешн) */
+            background: url('https://images.unsplash.com/photo-1490481651871-ab68de25d43d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;
+            animation: zoomBg 20s infinite alternate linear;
+            z-index: 1;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(10, 17, 24, 0.4), rgba(10, 17, 24, 0.8));
+            z-index: 2;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 3;
+            max-width: 800px;
+            padding: 20px;
+            animation: fadeInUp 1.5s ease-out forwards;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .hero-content h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(3rem, 8vw, 5.5rem);
+            font-weight: 400;
+            line-height: 1.1;
             margin-bottom: 20px;
             text-transform: uppercase;
+            letter-spacing: 2px;
         }
 
-        .hero p {
+        .hero-content p {
             font-size: 1.2rem;
-            max-width: 600px;
-            margin-bottom: 40px;
             font-weight: 300;
+            margin-bottom: 40px;
+            letter-spacing: 1px;
+            color: #eaeaea;
         }
 
         .btn {
-            padding: 15px 40px;
+            display: inline-block;
+            padding: 16px 45px;
             background-color: transparent;
-            border: 2px solid var(--accent);
-            color: var(--accent);
+            border: 1px solid var(--accent-gold);
+            color: var(--text-light);
             text-decoration: none;
-            font-weight: 600;
-            letter-spacing: 1px;
+            font-size: 0.9rem;
             text-transform: uppercase;
-            transition: all 0.3s ease;
+            letter-spacing: 2px;
+            transition: all 0.4s ease;
         }
 
         .btn:hover {
-            background-color: var(--accent);
-            color: white;
+            background-color: var(--accent-gold);
+            color: var(--primary-dark);
         }
 
-        /* Секции */
+        /* Секції */
         section {
-            padding: 80px 20px;
+            padding: 100px 20px;
             max-width: 1200px;
             margin: 0 auto;
         }
 
-        h2 {
-            font-family: 'Playfair Display', serif;
-            font-size: 2.5rem;
+        .section-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 3rem;
             text-align: center;
-            margin-bottom: 50px;
-            color: var(--primary);
+            margin-bottom: 60px;
+            color: var(--primary-dark);
+            font-weight: 400;
         }
 
-        /* Блок "О нас" */
+        /* Про бренд */
         .about {
             text-align: center;
             max-width: 800px;
             margin: 0 auto;
-            font-size: 1.1rem;
+            font-size: 1.2rem;
+            line-height: 1.8;
             color: #555;
         }
 
-        /* Галерея товаров/услуг */
+        .about strong {
+            color: var(--primary-dark);
+            font-weight: 500;
+        }
+
+        /* Каталог / Галерея */
         .gallery {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
         }
 
         .gallery-item {
             position: relative;
             overflow: hidden;
-            border-radius: 8px;
-            height: 350px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            height: 450px;
+            cursor: pointer;
         }
 
         .gallery-item img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.5s ease;
+            transition: transform 0.7s ease;
         }
 
         .gallery-item:hover img {
-            transform: scale(1.05);
+            transform: scale(1.08);
         }
 
-        .overlay {
+        .item-info {
             position: absolute;
-            top: 0;
+            bottom: 0;
             left: 0;
             width: 100%;
-            height: 100%;
-            background: rgba(26, 54, 93, 0.85);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            color: white;
-            padding: 20px;
+            padding: 30px 20px;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            color: var(--text-light);
             text-align: center;
         }
 
-        .gallery-item:hover .overlay {
-            opacity: 1;
+        .item-info h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.8rem;
+            font-weight: 400;
+            margin-bottom: 5px;
         }
 
-        .overlay h3 {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.5rem;
-            margin-bottom: 10px;
-            color: var(--accent);
+        .item-info span {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--accent-gold);
         }
 
-        /* Подвал / Контакты */
+        /* Підвал */
         footer {
-            background-color: var(--primary);
-            color: white;
+            background-color: var(--primary-dark);
+            color: var(--text-light);
             text-align: center;
-            padding: 60px 20px 30px;
-            margin-top: 50px;
+            padding: 80px 20px 40px;
         }
 
         footer h2 {
-            color: white;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.5rem;
             margin-bottom: 20px;
+            font-weight: 400;
         }
 
-        .social-links {
-            margin: 30px 0;
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            flex-wrap: wrap;
-        }
-
-        .social-links a {
-            padding: 12px 30px;
-            background-color: rgba(255,255,255,0.1);
-            color: white;
+        .social-btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 15px 40px;
+            background-color: var(--accent-gold);
+            color: var(--primary-dark);
             text-decoration: none;
-            border-radius: 30px;
-            font-weight: 600;
-            transition: all 0.3s;
-            border: 1px solid rgba(255,255,255,0.2);
+            font-weight: 500;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            border-radius: 2px;
+            transition: 0.3s;
         }
 
-        .social-links a:hover {
-            background-color: var(--accent);
-            border-color: var(--accent);
-            transform: translateY(-3px);
+        .social-btn:hover {
+            background-color: #fff;
         }
 
-        .copyright {
-            margin-top: 40px;
-            font-size: 0.9rem;
+        .dev-credit {
+            margin-top: 60px;
+            font-size: 0.85rem;
             opacity: 0.6;
+            letter-spacing: 1px;
+        }
+
+        /* Мобільний нижній бар (App-like Bottom Navigation) */
+        .bottom-nav {
+            display: none; /* Приховано на ПК */
+        }
+
+        @media (max-width: 768px) {
+            header { padding: 20px; }
+            .logo { font-size: 1.4rem; }
+            
+            body {
+                padding-bottom: 70px; /* Відступ для нижнього бару */
+            }
+
+            .bottom-nav {
+                display: flex;
+                justify-content: space-around;
+                align-items: center;
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                height: 70px;
+                background-color: var(--primary-dark);
+                box-shadow: 0 -2px 15px rgba(0,0,0,0.2);
+                z-index: 1000;
+            }
+
+            .nav-item {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                text-decoration: none;
+                color: #888;
+                font-size: 0.7rem;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+                transition: 0.3s;
+            }
+
+            .nav-item i {
+                font-size: 1.3rem;
+                margin-bottom: 5px;
+            }
+
+            .nav-item.active, .nav-item:hover {
+                color: var(--accent-gold);
+            }
+        }
+
+        /* Анімації */
+        @keyframes zoomBg {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.1); }
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
     </style>
 </head>
 <body>
 
-    <!-- Главный экран -->
-    <header class="hero">
-        <h1>More Nostro</h1>
-        <p>Эстетика в каждой детали. Ваш идеальный выбор.</p>
-        <a href="#gallery" class="btn">Смотреть каталог</a>
+    <header>
+        <a href="#" class="logo">More Nostro</a>
+        <div class="lang-switch">
+            <span class="active" onclick="switchLang(this)">UA</span>
+            <span onclick="switchLang(this)">EN</span>
+        </div>
     </header>
 
-    <!-- О нас -->
-    <section id="about" class="about">
-        <h2>О бренде</h2>
-        <p>More Nostro — это не просто аккаунт в Instagram. Это философия качества и стиля. Мы создаем продукты, которые подчеркивают вашу индивидуальность. Удобный заказ, премиальное качество и любовь к своему делу в каждом заказе.</p>
+    <div class="hero" id="home">
+        <div class="hero-bg"></div>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1>Мода, що говорить твоєю мовою</h1>
+            <p>Індивідуальний пошив. Ексклюзивні вишиті костюми та корсети, натхненні традиціями.</p>
+            <a href="#catalog" class="btn">Переглянути колекцію</a>
+        </div>
+    </div>
+
+    <section id="about">
+        <h2 class="section-title">Про бренд</h2>
+        <div class="about">
+            <p><strong>More Nostro</strong> — це не просто одяг, це маніфест вашої індивідуальності. Ми створюємо унікальні речі, поєднуючи сучасні силуети зі старовинними техніками вишивки. Кожен корсет та костюм — це ручна робота, власне виробництво та бездоганна увага до деталей.</p>
+        </div>
     </section>
 
-    <!-- Галерея (Сюда потом пойдут фото из их инсты) -->
-    <section id="gallery">
-        <h2>Наши работы</h2>
+    <section id="catalog">
+        <h2 class="section-title">Вибрані моделі</h2>
         <div class="gallery">
             <div class="gallery-item">
-                <img src="https://images.unsplash.com/photo-1611085583191-a3b181a88401?auto=format&fit=crop&w=600&q=80" alt="Item 1">
-                <div class="overlay">
-                    <h3>Новая коллекция</h3>
-                    <p>Посмотреть детали и цены</p>
+                <img src="https://images.unsplash.com/photo-1621112904887-419379ce6824?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Корсети">
+                <div class="item-info">
+                    <h3>Корсети</h3>
+                    <span>Індивідуальний дизайн</span>
                 </div>
             </div>
             <div class="gallery-item">
-                <img src="https://images.unsplash.com/photo-1434389678369-182cb14f27f8?auto=format&fit=crop&w=600&q=80" alt="Item 2">
-                <div class="overlay">
-                    <h3>Бестселлер</h3>
-                    <p>Выбор наших клиентов</p>
+                <img src="https://images.unsplash.com/photo-1539008835657-9e8e9680c956?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Костюми">
+                <div class="item-info">
+                    <h3>Вишиті костюми</h3>
+                    <span>Преміум якість</span>
                 </div>
             </div>
             <div class="gallery-item">
-                <img src="https://images.unsplash.com/photo-1515347619152-475a13ecbf0e?auto=format&fit=crop&w=600&q=80" alt="Item 3">
-                <div class="overlay">
-                    <h3>Эксклюзив</h3>
-                    <p>Ограниченная серия</p>
+                <img src="https://images.unsplash.com/photo-1584273143981-41c073dfe8f8?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Лімітована колекція">
+                <div class="item-info">
+                    <h3>Limited Edition</h3>
+                    <span>Ексклюзивні орнаменти</span>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Контакты -->
-    <footer id="contacts">
-        <h2>Оформить заказ</h2>
-        <p>Свяжитесь с нами удобным для вас способом для консультации или заказа</p>
-        <div class="social-links">
-            <a href="https://www.instagram.com/more.nostro?igsh=MWtqeHdpMWVhMW9wdw==" target="_blank">Instagram</a>
-            <a href="#whatsapp">WhatsApp</a>
-            <a href="#telegram">Telegram</a>
-        </div>
-        <div class="copyright">
-            &copy; 2026 More Nostro. Все права защищены. <br>
-            Сайт разработан [Твое Имя/Студия]
+    <footer id="contact">
+        <h2>Створи свій ідеальний образ</h2>
+        <p style="opacity: 0.8; margin-bottom: 20px;">Зв'яжіться з нами для консультації та замовлення</p>
+        <a href="https://www.instagram.com/more.nostro?igsh=MWtqeHdpMWVhMW9wdw==" target="_blank" class="social-btn">
+            <i class="fab fa-instagram" style="margin-right: 8px;"></i> Написати в Instagram
+        </a>
+        <div class="dev-credit">
+            &copy; 2026 More Nostro. Всі права захищено.<br>
+            Розробник EVSdev
         </div>
     </footer>
 
+    <div class="bottom-nav">
+        <a href="#home" class="nav-item active" onclick="setActiveNav(this)">
+            <i class="fas fa-home"></i>
+            Головна
+        </a>
+        <a href="#catalog" class="nav-item" onclick="setActiveNav(this)">
+            <i class="fas fa-search"></i>
+            Каталог
+        </a>
+        <a href="https://www.instagram.com/more.nostro?igsh=MWtqeHdpMWVhMW9wdw==" target="_blank" class="nav-item">
+            <i class="fab fa-instagram"></i>
+            Instagram
+        </a>
+        <a href="#contact" class="nav-item" onclick="setActiveNav(this)">
+            <i class="fas fa-comment-dots"></i>
+            Зв'язок
+        </a>
+    </div>
+
+    <script>
+        // Перемикач мов (візуальний ефект для презентації)
+        function switchLang(element) {
+            document.querySelectorAll('.lang-switch span').forEach(el => el.classList.remove('active'));
+            element.classList.add('active');
+        }
+
+        // Перемикач активного пункту в нижньому меню
+        function setActiveNav(element) {
+            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+            element.classList.add('active');
+        }
+    </script>
 </body>
 </html>
